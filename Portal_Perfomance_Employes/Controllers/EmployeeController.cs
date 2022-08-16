@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Portal_Perfomance_Employees.Data;
-using Portal_Perfomance_Employees.Models;
+using PortalPerfomanceEmployees.Data;
+using PortalPerfomanceEmployees.Models;
 
-namespace Portal_Perfomance_Employees.Controllers
+namespace PortalPerfomanceEmployees.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -16,7 +16,6 @@ namespace Portal_Perfomance_Employees.Controllers
             _employeesDB.PopularEmployeesDB();
         }
 
-
         [HttpGet]
         public async Task<IEnumerable<Employee>> Get() => _employeesDB.employees.ToList();
         
@@ -28,7 +27,6 @@ namespace Portal_Perfomance_Employees.Controllers
 
             return emp == null ? NotFound() : Ok(emp) ;
         }
-
 
         [HttpPost]
         public async Task<IEnumerable<Employee>> CreateEmployee(Employee employee)
@@ -49,7 +47,6 @@ namespace Portal_Perfomance_Employees.Controllers
             return _employeesDB.employees.ToList();
         }
 
-
         [HttpDelete("{id}")]
         public async Task<IEnumerable<Employee>> DeleteEmployee(int id)
         {
@@ -60,6 +57,5 @@ namespace Portal_Perfomance_Employees.Controllers
 
             return _employeesDB.employees.ToList();
         }
-
     }
 }

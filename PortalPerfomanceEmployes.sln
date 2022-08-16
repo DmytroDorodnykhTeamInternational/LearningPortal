@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Portal_Perfomance_Employees", "Portal_Perfomance_Employes\Portal_Perfomance_Employees.csproj", "{B2CE4DCF-268F-43C5-83D1-73353B2B23C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PortalPerfomanceEmployees", "Portal_Perfomance_Employes\PortalPerfomanceEmployees.csproj", "{B2CE4DCF-268F-43C5-83D1-73353B2B23C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,17 +1,16 @@
-﻿namespace Portal_Perfomance_Employees.Models
+﻿namespace PortalPerfomanceEmployees.Models
 {
     public class Employee
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public int Age { get; set; }
-        public seniority level { get; set; }
+        public Seniority level { get; set; }
         public DateTime Created { get; set; }
-
     }
 
-    public enum seniority
+    public enum Seniority
     {
-        Junior, mid_level, Senior
+        Junior, MidLevel, Senior
     }
 }

@@ -1,6 +1,6 @@
-﻿using Portal_Perfomance_Employees.Models;
+﻿using PortalPerfomanceEmployees.Models;
 
-namespace Portal_Perfomance_Employees.Data
+namespace PortalPerfomanceEmployees.Data
 {
     public class EmployeesDB
     {
@@ -9,9 +9,9 @@ namespace Portal_Perfomance_Employees.Data
         {
             employees = new List<Employee>()
             {
-                new Employee { Id = 1, Name = "Emp1", Age = 25 , level = seniority.Junior, Created = DateTime.Now},
-                new Employee { Id = 2, Name = "Emp2", Age = 30 , level = seniority.mid_level, Created = DateTime.Now},
-                new Employee { Id = 3, Name = "Emp3", Age = 35 , level = seniority.Senior, Created = DateTime.Now}
+                new Employee { Id = 1, Name = "Emp1", Age = 25 , level = Seniority.Junior, Created = DateTime.Now},
+                new Employee { Id = 2, Name = "Emp2", Age = 30 , level = Seniority.MidLevel, Created = DateTime.Now},
+                new Employee { Id = 3, Name = "Emp3", Age = 35 , level = Seniority.Senior, Created = DateTime.Now}
             };
         }
     }
