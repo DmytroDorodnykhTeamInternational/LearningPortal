@@ -21,7 +21,7 @@ namespace Portal_Perfomance_Employees.Controllers
         public async Task<IEnumerable<Employee>> Get() => _employeesDB.employees.ToList();
         
         [HttpGet("{id}")]
-        public IActionResult GetbyId(int id)
+        public async Task<IActionResult> GetbyId(int id)
         {
 
             Employee emp = _employeesDB.employees.Find(x => x.Id == id);
