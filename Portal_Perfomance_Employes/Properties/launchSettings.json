@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "Portal_Perfomance_Employes": {
+    "Portal_Perfomance_Employees": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

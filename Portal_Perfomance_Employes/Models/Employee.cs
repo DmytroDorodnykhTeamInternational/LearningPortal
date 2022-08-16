@@ -1,6 +1,6 @@
-﻿namespace Portal_Perfomance_Employes.Models
+﻿namespace Portal_Perfomance_Employees.Models
 {
-    public class Employe
+    public class Employee
     {
         public int Id { get; set; }
         public string Name { get; set; }
