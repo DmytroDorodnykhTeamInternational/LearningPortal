@@ -1,4 +1,21 @@
+var DevelopmentSpecificOrigins = "_developmentSpecificOrigins";
+var ProductionSpecificOrigins = "_productionSpecificOrigins";
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(DevelopmentSpecificOrigins,
+                      policy =>
+                      {
+                          policy.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+                      });
+    options.AddPolicy(ProductionSpecificOrigins,
+                      policy =>
+                      {
+                          policy.WithOrigins("").AllowAnyMethod().AllowAnyHeader();
+                      });
+});
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -10,9 +27,14 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseCors(DevelopmentSpecificOrigins);
 }
+else if (app.Environment.IsProduction())
+{
+    app.UseCors(ProductionSpecificOrigins);
+}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
