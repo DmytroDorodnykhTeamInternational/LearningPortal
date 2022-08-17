@@ -13,7 +13,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(ProductionSpecificOrigins,
                       policy =>
                       {
-                          policy.WithOrigins("");
+                          policy.WithOrigins("").AllowAnyMethod().AllowAnyHeader();
                       });
 });
 
@@ -27,16 +27,14 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
     app.UseCors(DevelopmentSpecificOrigins);
 }
 else if (app.Environment.IsProduction())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
     app.UseCors(ProductionSpecificOrigins);
 }
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
