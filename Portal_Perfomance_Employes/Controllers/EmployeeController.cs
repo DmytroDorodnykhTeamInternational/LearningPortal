@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PortalPerfomanceEmployees.Data;
 using PortalPerfomanceEmployees.Models;
 
@@ -9,53 +10,57 @@ namespace PortalPerfomanceEmployees.Controllers
     [ApiController]
     public class EmployeeController : ControllerBase
     {
-        private EmployeesDB _employeesDB = new EmployeesDB();
+        private readonly EmployeeContext _context;
 
-        public EmployeeController()
+        public EmployeeController(EmployeeContext context)
         {
-            _employeesDB.PopularEmployeesDB();
+            _context = context;
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Employee>> Get() => _employeesDB.employees.ToList();
+        public async Task<IActionResult> GetEmployees()
+        {
+            return Ok(await _context.Employees.ToListAsync());
+        }
         
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetbyId(int id)
+        public async Task<IActionResult> GetEmployee(int id)
         {
-
-            Employee emp = _employeesDB.employees.Find(x => x.Id == id);
-
-            return emp == null ? NotFound() : Ok(emp) ;
+            var emp = await _context.Employees
+                .FirstOrDefaultAsync(e => e.Id == id);
+            return emp == null ? NotFound("Employee with that ID was not found") : Ok(emp) ;
         }
 
         [HttpPost]
-        public async Task<IEnumerable<Employee>> CreateEmployee(Employee employee)
+        public async Task<IActionResult> CreateEmployee(Employee employee)
         {
-            _employeesDB.employees.Add(employee);
-            return _employeesDB.employees.ToList();
+            _context.Employees.Add(employee);
+            await _context.SaveChangesAsync();
+            return Ok(await GetEmployees());
         }
 
         [HttpPut("{id}")]
-        public async Task<IEnumerable<Employee>> UpdateEmployee(int id, Employee employee)
+        public async Task<IActionResult> UpdateEmployee(Employee employee, int id)
         {
-
-            int index = _employeesDB.employees.FindIndex(s => s.Id == id);
-
-            if (index != -1)
-                _employeesDB.employees[index] = employee;
-            
-            return _employeesDB.employees.ToList();
+            var EmployeeToUpdate = await _context.Employees
+                .FirstOrDefaultAsync(e => e.Id == id);
+            if (EmployeeToUpdate == null) return NotFound("Employee with that ID was not found");
+            EmployeeToUpdate.Name = employee.Name;
+            EmployeeToUpdate.Age = employee.Age;
+            EmployeeToUpdate.Level = employee.Level;
+            await _context.SaveChangesAsync();
+            return Ok(await GetEmployees());
         }
 
         [HttpDelete("{id}")]
-        public async Task<IEnumerable<Employee>> DeleteEmployee(int id)
+        public async Task<IActionResult> DeleteEmployee(int id)
         {
-
-            int index = _employeesDB.employees.FindIndex(s => s.Id == id);
-
-            _employeesDB.employees.RemoveAt(index);
-
-            return _employeesDB.employees.ToList();
+            var EmployeeToDelete = await _context.Employees
+                .FirstOrDefaultAsync(e => e.Id == id);
+            if (EmployeeToDelete == null) return NotFound("Employee with that ID was not found");
+            _context.Employees.Remove(EmployeeToDelete);
+            await _context.SaveChangesAsync();
+            return Ok(await GetEmployees());
         }
     }
 }
