@@ -1,4 +1,21 @@
+var DevelopmentSpecificOrigins = "_developmentSpecificOrigins";
+var ProductionSpecificOrigins = "_productionSpecificOrigins";
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(DevelopmentSpecificOrigins,
+                      policy =>
+                      {
+                          policy.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+                      });
+    options.AddPolicy(ProductionSpecificOrigins,
+                      policy =>
+                      {
+                          policy.WithOrigins("");
+                      });
+});
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -12,6 +29,13 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseCors(DevelopmentSpecificOrigins);
+}
+else if (app.Environment.IsProduction())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+    app.UseCors(ProductionSpecificOrigins);
 }
 
 app.UseHttpsRedirection();
