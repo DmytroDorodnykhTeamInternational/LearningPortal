@@ -32,9 +32,14 @@ namespace PortalPerfomanceEmployees.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateEmployee(Employee employee)
+        public async Task<IActionResult> CreateEmployee(EmployeeDTO employee)
         {
-            _context.Employees.Add(employee);
+            Employee newEmployee = new Employee();
+            newEmployee.Name = employee.Name;
+            newEmployee.Age = employee.Age;
+            newEmployee.Level = employee.Level;
+            newEmployee.Created = DateTime.Now;
+            _context.Employees.Add(newEmployee);
             await _context.SaveChangesAsync();
             return Ok(await GetEmployees());
         }
