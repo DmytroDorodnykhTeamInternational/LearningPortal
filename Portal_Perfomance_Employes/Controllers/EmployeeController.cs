@@ -35,9 +35,10 @@ namespace PortalPerfomanceEmployees.Controllers
         public async Task<IActionResult> CreateEmployee(EmployeeDTO employee)
         {
             Employee newEmployee = new Employee();
-            newEmployee.Name = employee.Name;
-            newEmployee.Age = employee.Age;
-            newEmployee.Level = employee.Level;
+            newEmployee.FirstName = employee.FirstName;
+            newEmployee.LastName = employee.LastName;
+            newEmployee.DateOfBirth = (DateTime) employee.DateOfBirth;
+            newEmployee.Level = (Seniority) employee.Level;
             newEmployee.Created = DateTime.Now;
             _context.Employees.Add(newEmployee);
             await _context.SaveChangesAsync();
@@ -50,8 +51,9 @@ namespace PortalPerfomanceEmployees.Controllers
             var EmployeeToUpdate = await _context.Employees
                 .FirstOrDefaultAsync(e => e.Id == id);
             if (EmployeeToUpdate == null) return NotFound("Employee with that ID was not found");
-            EmployeeToUpdate.Name = employee.Name;
-            EmployeeToUpdate.Age = employee.Age;
+            EmployeeToUpdate.FirstName = employee.FirstName;
+            EmployeeToUpdate.LastName = employee.LastName;
+            EmployeeToUpdate.DateOfBirth = employee.DateOfBirth;
             EmployeeToUpdate.Level = employee.Level;
             await _context.SaveChangesAsync();
             return Ok(await GetEmployees());
