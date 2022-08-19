@@ -162,6 +162,10 @@ csharp_space_between_parentheses = false
 csharp_space_between_square_brackets = false
 
 ### Visual Basic code style settings ###
+
+# CS0168: Variable is declared but never used
+dotnet_diagnostic.CS0168.severity = error
+
 [*.vb]
 
 # Expression-level preferences
@@ -281,3 +285,6 @@ dotnet_diagnostic.VSTHRD002.severity = none
 
 # VSTHRD011: Use AsyncLazy<T>
 dotnet_diagnostic.VSTHRD011.severity = none
+
+# IDE0060: Remove unused parameter
+dotnet_diagnostic.IDE0060.severity = error
