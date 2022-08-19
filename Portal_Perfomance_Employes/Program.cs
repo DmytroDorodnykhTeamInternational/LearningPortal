@@ -1,3 +1,6 @@
+using PortalPerfomanceEmployees.Data;
+using Microsoft.EntityFrameworkCore;
+
 var DevelopmentSpecificOrigins = "_developmentSpecificOrigins";
 var ProductionSpecificOrigins = "_productionSpecificOrigins";
 
@@ -22,6 +25,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Configuration.AddUserSecrets<Program>(true);
+builder.Services.AddDbContext<EmployeeContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("EmployeeDbString")));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -33,6 +39,7 @@ else if (app.Environment.IsProduction())
 {
     app.UseCors(ProductionSpecificOrigins);
 }
+
 app.UseSwagger();
 app.UseSwaggerUI();
 
