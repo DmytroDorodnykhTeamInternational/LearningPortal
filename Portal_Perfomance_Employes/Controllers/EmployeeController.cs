@@ -37,9 +37,9 @@ namespace PortalPerfomanceEmployees.Controllers
             Employee newEmployee = new Employee();
             newEmployee.FirstName = employee.FirstName;
             newEmployee.LastName = employee.LastName;
-            newEmployee.DateOfBirth = employee.DateOfBirth;
-            newEmployee.Level = employee.Level;
-            newEmployee.Tier = employee.Tier;
+            newEmployee.DateOfBirth = (DateTime)employee.DateOfBirth;
+            newEmployee.Level = (Seniority)employee.Level;
+            newEmployee.Tier = (Role)employee.Tier;
             newEmployee.Created = DateTime.Now;
             _context.Employees.Add(newEmployee);
             await _context.SaveChangesAsync();
@@ -54,9 +54,9 @@ namespace PortalPerfomanceEmployees.Controllers
             if (EmployeeToUpdate == null) return NotFound("Employee with that ID was not found");
             EmployeeToUpdate.FirstName = employee.FirstName;
             EmployeeToUpdate.LastName = employee.LastName;
-            EmployeeToUpdate.DateOfBirth = employee.DateOfBirth;
-            EmployeeToUpdate.Level = employee.Level;
-            EmployeeToUpdate.Tier = employee.Tier;
+            EmployeeToUpdate.DateOfBirth = (DateTime)employee.DateOfBirth;
+            EmployeeToUpdate.Level = (Seniority)employee.Level;
+            EmployeeToUpdate.Tier = (Role)employee.Tier;
             await _context.SaveChangesAsync();
             return Ok(await GetEmployees());
         }
