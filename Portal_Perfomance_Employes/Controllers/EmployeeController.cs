@@ -40,6 +40,7 @@ namespace PortalPerfomanceEmployees.Controllers
             newEmployee.DateOfBirth = (DateTime)employee.DateOfBirth;
             newEmployee.Seniority = (Seniority)employee.Seniority;
             newEmployee.Role = (Role)employee.Role;
+            newEmployee.TeamId = employee.TeamId;
             newEmployee.Created = DateTime.Now;
             _context.Employees.Add(newEmployee);
             await _context.SaveChangesAsync();
@@ -57,6 +58,7 @@ namespace PortalPerfomanceEmployees.Controllers
             EmployeeToUpdate.DateOfBirth = (DateTime)employee.DateOfBirth;
             EmployeeToUpdate.Seniority = (Seniority)employee.Seniority;
             EmployeeToUpdate.Role = (Role)employee.Role;
+            EmployeeToUpdate.TeamId = employee.TeamId;
             await _context.SaveChangesAsync();
             return Ok(await GetEmployees());
         }
