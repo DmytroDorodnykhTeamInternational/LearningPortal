@@ -3,27 +3,27 @@ import { Link } from 'react-router-dom'
 
 function SignUp() {
   return (
-    <div className=''>
+    <div>
           <div>
-            <h2 className=''>Sign Up </h2> 
+            <h2>Sign Up </h2> 
           </div>
           <form>
-            <div className=''>
-                <label className=''>Login</label>
+            <div>
+                <label>Login</label>
                 <input type='login'/>
             </div>
-            <div className=''>
-                <label className=''>Password</label>
-                <input className='' type='password'  />
+            <div>
+                <label>Password</label>
+                <input type='password'  />
             </div>
-            <div className=''>
-                <label className=''>Password Сonfirmation</label>
-                <input className='' type='password'  />
+            <div>
+                <label>Password Сonfirmation</label>
+                <input type='password'  />
             </div>
             <button>Sign Up</button>
             <div>
-                <p className=''>
-                 Do you have an account? <Link to='/login' className=''>Sing In Here</Link>
+                <p>
+                 Do you have an account? <Link to='/login'>Sing In Here</Link>
                 </p>
             </div>
           </form>
