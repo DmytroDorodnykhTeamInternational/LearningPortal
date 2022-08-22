@@ -38,8 +38,8 @@ namespace PortalPerfomanceEmployees.Controllers
             newEmployee.FirstName = employee.FirstName;
             newEmployee.LastName = employee.LastName;
             newEmployee.DateOfBirth = (DateTime)employee.DateOfBirth;
-            newEmployee.Level = (Seniority)employee.Level;
-            newEmployee.Tier = (Role)employee.Tier;
+            newEmployee.Seniority = (Seniority)employee.Seniority;
+            newEmployee.Role = (Role)employee.Role;
             newEmployee.Created = DateTime.Now;
             _context.Employees.Add(newEmployee);
             await _context.SaveChangesAsync();
@@ -55,8 +55,8 @@ namespace PortalPerfomanceEmployees.Controllers
             EmployeeToUpdate.FirstName = employee.FirstName;
             EmployeeToUpdate.LastName = employee.LastName;
             EmployeeToUpdate.DateOfBirth = (DateTime)employee.DateOfBirth;
-            EmployeeToUpdate.Level = (Seniority)employee.Level;
-            EmployeeToUpdate.Tier = (Role)employee.Tier;
+            EmployeeToUpdate.Seniority = (Seniority)employee.Seniority;
+            EmployeeToUpdate.Role = (Role)employee.Role;
             await _context.SaveChangesAsync();
             return Ok(await GetEmployees());
         }

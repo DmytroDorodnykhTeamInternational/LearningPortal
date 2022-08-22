@@ -15,10 +15,10 @@ namespace PortalPerfomanceEmployees.Models
         public DateTime? DateOfBirth { get; set; }
         [Required(ErrorMessage = "Please choose a seniority level")]
         [Range(0, 2, ErrorMessage = "Please choose a correct seniority level")]
-        public Seniority? Level { get; set; }
+        public Seniority? Seniority { get; set; }
         [Required(ErrorMessage = "Please choose a role tier")]
         [Range(0, 2, ErrorMessage = "Please choose a correct role tier")]
-        public Role? Tier { get; set; }
+        public Role? Role { get; set; }
         // These fields are nullable because otherwise the [Required] attribute will not work
     }
 }
