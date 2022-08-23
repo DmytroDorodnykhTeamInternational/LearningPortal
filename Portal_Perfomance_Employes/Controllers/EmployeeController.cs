@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PortalPerfomanceEmployees.Data;
 using PortalPerfomanceEmployees.Models;
@@ -10,9 +9,9 @@ namespace PortalPerfomanceEmployees.Controllers
     [ApiController]
     public class EmployeeController : ControllerBase
     {
-        private readonly EmployeeContext _context;
+        private readonly AppDbContext _context;
 
-        public EmployeeController(EmployeeContext context)
+        public EmployeeController(AppDbContext context)
         {
             _context = context;
         }
@@ -27,8 +26,8 @@ namespace PortalPerfomanceEmployees.Controllers
         public async Task<IActionResult> GetEmployee(int id)
         {
             var emp = await _context.Employees
-                .FirstOrDefaultAsync(e => e.Id == id);
-            return emp == null ? NotFound("Employee with that ID was not found") : Ok(emp) ;
+                .FirstOrDefaultAsync(e => e.EmployeeId == id);
+            return emp == null ? NotFound("Employee with that ID was not found") : Ok(emp);
         }
 
         [HttpPost]
@@ -50,7 +49,7 @@ namespace PortalPerfomanceEmployees.Controllers
         public async Task<IActionResult> UpdateEmployee(EmployeeDTO employee, int id)
         {
             var EmployeeToUpdate = await _context.Employees
-                .FirstOrDefaultAsync(e => e.Id == id);
+                .FirstOrDefaultAsync(e => e.EmployeeId == id);
             if (EmployeeToUpdate == null) return NotFound("Employee with that ID was not found");
             EmployeeToUpdate.FirstName = employee.FirstName;
             EmployeeToUpdate.LastName = employee.LastName;
@@ -65,7 +64,7 @@ namespace PortalPerfomanceEmployees.Controllers
         public async Task<IActionResult> DeleteEmployee(int id)
         {
             var EmployeeToDelete = await _context.Employees
-                .FirstOrDefaultAsync(e => e.Id == id);
+                .FirstOrDefaultAsync(e => e.EmployeeId == id);
             if (EmployeeToDelete == null) return NotFound("Employee with that ID was not found");
             _context.Employees.Remove(EmployeeToDelete);
             await _context.SaveChangesAsync();

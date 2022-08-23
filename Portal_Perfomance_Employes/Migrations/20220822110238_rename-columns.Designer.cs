@@ -11,7 +11,7 @@ using PortalPerfomanceEmployees.Data;
 
 namespace PortalPerfomanceEmployees.Migrations
 {
-    [DbContext(typeof(EmployeeContext))]
+    [DbContext(typeof(Data.AppDbContext))]
     [Migration("20220822110238_rename-columns")]
     partial class renamecolumns
     {

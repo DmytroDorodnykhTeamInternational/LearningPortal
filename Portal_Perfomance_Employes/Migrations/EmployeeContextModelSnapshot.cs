@@ -10,7 +10,7 @@ using PortalPerfomanceEmployees.Data;
 
 namespace PortalPerfomanceEmployees.Migrations
 {
-    [DbContext(typeof(EmployeeContext))]
+    [DbContext(typeof(AppDbContext))]
     partial class EmployeeContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -24,11 +24,11 @@ namespace PortalPerfomanceEmployees.Migrations
 
             modelBuilder.Entity("PortalPerfomanceEmployees.Models.Employee", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("EmployeeId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EmployeeId"), 1L, 1);
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
@@ -50,15 +50,15 @@ namespace PortalPerfomanceEmployees.Migrations
                     b.Property<int>("Seniority")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("EmployeeId");
 
                     b.ToTable("Employees");
 
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            Created = new DateTime(2022, 8, 22, 14, 2, 37, 876, DateTimeKind.Local).AddTicks(6735),
+                            EmployeeId = 1,
+                            Created = new DateTime(2022, 8, 23, 14, 11, 43, 878, DateTimeKind.Local).AddTicks(9076),
                             DateOfBirth = new DateTime(2000, 5, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FirstName = "Emp1",
                             LastName = "Test1",
@@ -67,8 +67,8 @@ namespace PortalPerfomanceEmployees.Migrations
                         },
                         new
                         {
-                            Id = 2,
-                            Created = new DateTime(2022, 8, 22, 14, 2, 37, 876, DateTimeKind.Local).AddTicks(6768),
+                            EmployeeId = 2,
+                            Created = new DateTime(2022, 8, 23, 14, 11, 43, 878, DateTimeKind.Local).AddTicks(9107),
                             DateOfBirth = new DateTime(1980, 3, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FirstName = "Emp2",
                             LastName = "Test2",
@@ -77,13 +77,70 @@ namespace PortalPerfomanceEmployees.Migrations
                         },
                         new
                         {
-                            Id = 3,
-                            Created = new DateTime(2022, 8, 22, 14, 2, 37, 876, DateTimeKind.Local).AddTicks(6771),
+                            EmployeeId = 3,
+                            Created = new DateTime(2022, 8, 23, 14, 11, 43, 878, DateTimeKind.Local).AddTicks(9109),
                             DateOfBirth = new DateTime(2005, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FirstName = "Emp3",
                             LastName = "Test3",
                             Role = 2,
                             Seniority = 2
+                        });
+                });
+
+            modelBuilder.Entity("PortalPerfomanceEmployees.Models.User", b =>
+                {
+                    b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"), 1L, 1);
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EmailAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GivenName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            Created = new DateTime(2022, 8, 23, 14, 11, 43, 878, DateTimeKind.Local).AddTicks(9177),
+                            EmailAddress = "admin@email.com",
+                            GivenName = "adm",
+                            Password = "1234",
+                            Role = 2,
+                            Username = "admin"
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            Created = new DateTime(2022, 8, 23, 14, 11, 43, 878, DateTimeKind.Local).AddTicks(9181),
+                            EmailAddress = "emp@email.com",
+                            GivenName = "emp",
+                            Password = "1234",
+                            Role = 0,
+                            Username = "emp"
                         });
                 });
 #pragma warning restore 612, 618

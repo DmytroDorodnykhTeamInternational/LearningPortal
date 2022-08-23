@@ -166,6 +166,15 @@ csharp_space_between_square_brackets = false
 # CS0168: Variable is declared but never used
 dotnet_diagnostic.CS0168.severity = error
 
+# CS8629: Nullable value type may be null.
+dotnet_diagnostic.CS8629.severity = silent
+
+# IDE0073: The file header is missing or not located at the top of the file
+dotnet_diagnostic.IDE0073.severity = silent
+
+# IDE0005: Using directive is unnecessary.
+dotnet_diagnostic.IDE0005.severity = silent
+
 [*.vb]
 
 # Expression-level preferences
