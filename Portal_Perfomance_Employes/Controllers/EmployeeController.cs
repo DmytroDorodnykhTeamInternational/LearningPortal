@@ -22,7 +22,7 @@ namespace PortalPerfomanceEmployees.Controllers
         {
             return Ok(await _context.Employees.ToListAsync());
         }
-        
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetEmployee(int id)
         {
@@ -37,8 +37,9 @@ namespace PortalPerfomanceEmployees.Controllers
             Employee newEmployee = new Employee();
             newEmployee.FirstName = employee.FirstName;
             newEmployee.LastName = employee.LastName;
-            newEmployee.DateOfBirth = (DateTime) employee.DateOfBirth;
-            newEmployee.Level = (Seniority) employee.Level;
+            newEmployee.DateOfBirth = (DateTime)employee.DateOfBirth;
+            newEmployee.Seniority = (Seniority)employee.Seniority;
+            newEmployee.Role = (Role)employee.Role;
             newEmployee.Created = DateTime.Now;
             _context.Employees.Add(newEmployee);
             await _context.SaveChangesAsync();
@@ -46,15 +47,16 @@ namespace PortalPerfomanceEmployees.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateEmployee(Employee employee, int id)
+        public async Task<IActionResult> UpdateEmployee(EmployeeDTO employee, int id)
         {
             var EmployeeToUpdate = await _context.Employees
                 .FirstOrDefaultAsync(e => e.Id == id);
             if (EmployeeToUpdate == null) return NotFound("Employee with that ID was not found");
             EmployeeToUpdate.FirstName = employee.FirstName;
             EmployeeToUpdate.LastName = employee.LastName;
-            EmployeeToUpdate.DateOfBirth = employee.DateOfBirth;
-            EmployeeToUpdate.Level = employee.Level;
+            EmployeeToUpdate.DateOfBirth = (DateTime)employee.DateOfBirth;
+            EmployeeToUpdate.Seniority = (Seniority)employee.Seniority;
+            EmployeeToUpdate.Role = (Role)employee.Role;
             await _context.SaveChangesAsync();
             return Ok(await GetEmployees());
         }

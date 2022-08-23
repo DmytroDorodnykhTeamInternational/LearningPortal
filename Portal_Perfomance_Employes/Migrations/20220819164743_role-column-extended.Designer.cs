@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PortalPerfomanceEmployees.Data;
 
@@ -11,9 +12,10 @@ using PortalPerfomanceEmployees.Data;
 namespace PortalPerfomanceEmployees.Migrations
 {
     [DbContext(typeof(EmployeeContext))]
-    partial class EmployeeContextModelSnapshot : ModelSnapshot
+    [Migration("20220819164743_role-column-extended")]
+    partial class rolecolumnextended
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,10 +46,10 @@ namespace PortalPerfomanceEmployees.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Role")
+                    b.Property<int>("Level")
                         .HasColumnType("int");
 
-                    b.Property<int>("Seniority")
+                    b.Property<int>("Tier")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -58,32 +60,32 @@ namespace PortalPerfomanceEmployees.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2022, 8, 22, 14, 2, 37, 876, DateTimeKind.Local).AddTicks(6735),
+                            Created = new DateTime(2022, 8, 19, 19, 47, 43, 82, DateTimeKind.Local).AddTicks(6845),
                             DateOfBirth = new DateTime(2000, 5, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FirstName = "Emp1",
                             LastName = "Test1",
-                            Role = 0,
-                            Seniority = 0
+                            Level = 0,
+                            Tier = 0
                         },
                         new
                         {
                             Id = 2,
-                            Created = new DateTime(2022, 8, 22, 14, 2, 37, 876, DateTimeKind.Local).AddTicks(6768),
+                            Created = new DateTime(2022, 8, 19, 19, 47, 43, 82, DateTimeKind.Local).AddTicks(6879),
                             DateOfBirth = new DateTime(1980, 3, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FirstName = "Emp2",
                             LastName = "Test2",
-                            Role = 1,
-                            Seniority = 1
+                            Level = 1,
+                            Tier = 1
                         },
                         new
                         {
                             Id = 3,
-                            Created = new DateTime(2022, 8, 22, 14, 2, 37, 876, DateTimeKind.Local).AddTicks(6771),
+                            Created = new DateTime(2022, 8, 19, 19, 47, 43, 82, DateTimeKind.Local).AddTicks(6881),
                             DateOfBirth = new DateTime(2005, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FirstName = "Emp3",
                             LastName = "Test3",
-                            Role = 2,
-                            Seniority = 2
+                            Level = 2,
+                            Tier = 2
                         });
                 });
 #pragma warning restore 612, 618
