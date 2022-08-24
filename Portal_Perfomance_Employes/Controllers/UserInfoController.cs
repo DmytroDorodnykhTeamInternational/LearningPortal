@@ -25,7 +25,7 @@ namespace PortalPerfomanceEmployees.Controllers
                 .FirstOrDefaultAsync(e => e.Id == id);
             if (emp == null)
             {
-                return Json("Employee with that ID was not found");
+                return Json("Employee with specified Id was not found");
             }
             else if (emp.Role == Role.Teamlead || emp.Role == Role.Employee)
             {
@@ -51,13 +51,13 @@ namespace PortalPerfomanceEmployees.Controllers
                 .FirstOrDefaultAsync(e => e.Id == idOfInterest);
             if (user == null || personOfInterest == null)
             {
-                return Json("Employee with that ID was not found");
+                return Json("Employee with specified Id was not found");
             }
-            if (user.Role == Role.Admin)
+            else if(user.Role == Role.Admin)
             {
                 return Json(personOfInterest);
             }
-            if (user.TeamId == personOfInterest.TeamId)
+            else if(user.TeamId == personOfInterest.TeamId)
             {
                 return Json(personOfInterest);
             }
