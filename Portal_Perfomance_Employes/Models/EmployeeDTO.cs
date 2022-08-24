@@ -20,5 +20,7 @@ namespace PortalPerfomanceEmployees.Models
         [Range(0, 2, ErrorMessage = "Please choose a correct role tier")]
         public Role? Role { get; set; }
         // These fields are nullable because otherwise the [Required] attribute will not work
+        [Required(ErrorMessage = "Please enter a group id")]
+        public int TeamId { get; set; }
     }
 }
