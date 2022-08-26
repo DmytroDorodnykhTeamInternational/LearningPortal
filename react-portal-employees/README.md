@@ -4,13 +4,13 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Available Scripts
 
-Install Node.js and NPM 
+Install Node.js and NPM
 
 Step 1: Download [Node.js](https://nodejs.org/en/)
 
 Step 2: Install Node.js and NPM.
 
-Step 3: Verify Installation. 
+Step 3: Verify Installation.
 Open a command prompt, terminal in IDE or PowerShell and enter the following:
 
 ### `node -v`
