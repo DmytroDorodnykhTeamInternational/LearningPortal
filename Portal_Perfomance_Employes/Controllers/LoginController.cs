@@ -24,31 +24,28 @@ namespace PortalPerfomanceEmployees.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult Login(UserDTO userLogin)
+        public IActionResult Login(EmployeeLoginDTO empLogin)
         {
-            var user = Autenticate(userLogin);
-            if (user != null)
+            var Employee = Autenticate(empLogin);
+            if (Employee != null)
             {
-                string token = GenerateToken(user);
+                string token = GenerateToken(Employee);
                 return Ok(token);
             }
-
-            return NotFound("User not found.");
+            return NotFound("Username or password not found.");
         }
 
-        private string GenerateToken(User user)
+        private string GenerateToken(Employee emp)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-
             var claims = new[]
             {
-                new Claim(ClaimTypes.NameIdentifier, user.Username),
-                new Claim(ClaimTypes.Email, user.EmailAddress),
-                new Claim(ClaimTypes.GivenName, user.GivenName),
-                new Claim(ClaimTypes.Role, user.Role.ToString())
+                new Claim(ClaimTypes.NameIdentifier, emp.Username),
+                new Claim(ClaimTypes.Email, emp.EmailAddress),
+                new Claim(ClaimTypes.GivenName, emp.FirstName),
+                new Claim(ClaimTypes.Role, emp.Role.ToString())
             };
-
             var token = new JwtSecurityToken(_config["Jwt:Issuer"],
               _config["Jwt:Audience"],
               claims,
@@ -56,18 +53,15 @@ namespace PortalPerfomanceEmployees.Controllers
               signingCredentials: credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
-
         }
 
-        private User? Autenticate(UserDTO user)
+        private Employee? Autenticate(EmployeeLoginDTO emp)
         {
-            var currentUser = _context.Users.FirstOrDefault(u => u.Username == user.Username && u.Password == user.Password);
-
-            if (currentUser != null)
+            var currentEmp = _context.Employees.FirstOrDefault(u => u.Username == emp.Username && u.Password == emp.Password);
+            if (currentEmp != null)
             {
-                return currentUser;
+                return currentEmp;
             }
-
             return null;
         }
 

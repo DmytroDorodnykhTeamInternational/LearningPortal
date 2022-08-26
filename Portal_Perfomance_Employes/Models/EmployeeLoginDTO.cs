@@ -2,7 +2,7 @@
 
 namespace PortalPerfomanceEmployees.Models
 {
-    public class UserDTO
+    public class EmployeeLoginDTO
     {
         [Required(ErrorMessage = "Please enter user name")]
         public string Username { get; set; } = "";

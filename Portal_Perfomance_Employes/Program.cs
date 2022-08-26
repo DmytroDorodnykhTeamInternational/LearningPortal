@@ -21,7 +21,6 @@ builder.Services.AddCors(options =>
                           policy.WithOrigins("").AllowAnyMethod().AllowAnyHeader();
                       });
 });
-
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
         options =>
         {

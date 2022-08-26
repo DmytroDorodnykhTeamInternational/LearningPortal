@@ -26,7 +26,7 @@ namespace PortalPerfomanceEmployees.Controllers
         public async Task<IActionResult> GetEmployee(int id)
         {
             var emp = await _context.Employees
-                .FirstOrDefaultAsync(e => e.EmployeeId == id);
+                .FirstOrDefaultAsync(e => e.Id == id);
             return emp == null ? NotFound("Employee with that ID was not found") : Ok(emp);
         }
 
@@ -49,7 +49,7 @@ namespace PortalPerfomanceEmployees.Controllers
         public async Task<IActionResult> UpdateEmployee(EmployeeDTO employee, int id)
         {
             var EmployeeToUpdate = await _context.Employees
-                .FirstOrDefaultAsync(e => e.EmployeeId == id);
+                .FirstOrDefaultAsync(e => e.Id == id);
             if (EmployeeToUpdate == null) return NotFound("Employee with that ID was not found");
             EmployeeToUpdate.FirstName = employee.FirstName;
             EmployeeToUpdate.LastName = employee.LastName;
@@ -64,7 +64,7 @@ namespace PortalPerfomanceEmployees.Controllers
         public async Task<IActionResult> DeleteEmployee(int id)
         {
             var EmployeeToDelete = await _context.Employees
-                .FirstOrDefaultAsync(e => e.EmployeeId == id);
+                .FirstOrDefaultAsync(e => e.Id == id);
             if (EmployeeToDelete == null) return NotFound("Employee with that ID was not found");
             _context.Employees.Remove(EmployeeToDelete);
             await _context.SaveChangesAsync();
