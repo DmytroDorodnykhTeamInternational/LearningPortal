@@ -18,5 +18,6 @@ namespace PortalPerfomanceEmployees.Data
                 );
         }
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<Team> Teams { get; set; }
     }
 }

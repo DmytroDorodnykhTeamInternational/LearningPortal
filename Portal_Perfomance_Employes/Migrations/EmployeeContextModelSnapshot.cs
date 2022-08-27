@@ -24,11 +24,8 @@ namespace PortalPerfomanceEmployees.Migrations
 
             modelBuilder.Entity("PortalPerfomanceEmployees.Models.Employee", b =>
                 {
-                    b.Property<int>("EmployeeId")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("Id")
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EmployeeId"), 1L, 1);
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
@@ -36,73 +33,15 @@ namespace PortalPerfomanceEmployees.Migrations
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("EmailAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Role")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Seniority")
-                        .HasColumnType("int");
-
-                    b.HasKey("EmployeeId");
-
-                    b.ToTable("Employees");
-
-                    b.HasData(
-                        new
-                        {
-                            EmployeeId = 1,
-                            Created = new DateTime(2022, 8, 23, 14, 11, 43, 878, DateTimeKind.Local).AddTicks(9076),
-                            DateOfBirth = new DateTime(2000, 5, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Emp1",
-                            LastName = "Test1",
-                            Role = 0,
-                            Seniority = 0
-                        },
-                        new
-                        {
-                            EmployeeId = 2,
-                            Created = new DateTime(2022, 8, 23, 14, 11, 43, 878, DateTimeKind.Local).AddTicks(9107),
-                            DateOfBirth = new DateTime(1980, 3, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Emp2",
-                            LastName = "Test2",
-                            Role = 1,
-                            Seniority = 1
-                        },
-                        new
-                        {
-                            EmployeeId = 3,
-                            Created = new DateTime(2022, 8, 23, 14, 11, 43, 878, DateTimeKind.Local).AddTicks(9109),
-                            DateOfBirth = new DateTime(2005, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Emp3",
-                            LastName = "Test3",
-                            Role = 2,
-                            Seniority = 2
-                        });
-                });
-
-            modelBuilder.Entity("PortalPerfomanceEmployees.Models.User", b =>
-                {
-                    b.Property<int>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"), 1L, 1);
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("EmailAddress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("GivenName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -113,35 +52,110 @@ namespace PortalPerfomanceEmployees.Migrations
                     b.Property<int>("Role")
                         .HasColumnType("int");
 
+                    b.Property<int>("Seniority")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TeamId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UserId");
+                    b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Employees");
 
                     b.HasData(
                         new
                         {
-                            UserId = 1,
-                            Created = new DateTime(2022, 8, 23, 14, 11, 43, 878, DateTimeKind.Local).AddTicks(9177),
-                            EmailAddress = "admin@email.com",
-                            GivenName = "adm",
+                            Id = 1,
+                            Created = new DateTime(2022, 8, 27, 13, 5, 57, 70, DateTimeKind.Local).AddTicks(279),
+                            DateOfBirth = new DateTime(2000, 5, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EmailAddress = "emp@email.com",
+                            FirstName = "Emp1",
+                            LastName = "Test1",
                             Password = "1234",
-                            Role = 2,
-                            Username = "admin"
+                            Role = 0,
+                            Seniority = 0,
+                            Username = "emp"
                         },
                         new
                         {
-                            UserId = 2,
-                            Created = new DateTime(2022, 8, 23, 14, 11, 43, 878, DateTimeKind.Local).AddTicks(9181),
-                            EmailAddress = "emp@email.com",
-                            GivenName = "emp",
+                            Id = 2,
+                            Created = new DateTime(2022, 8, 27, 13, 5, 57, 70, DateTimeKind.Local).AddTicks(317),
+                            DateOfBirth = new DateTime(1980, 3, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EmailAddress = "teamlead@email.com",
+                            FirstName = "Emp2",
+                            LastName = "Test2",
                             Password = "1234",
-                            Role = 0,
-                            Username = "emp"
+                            Role = 1,
+                            Seniority = 1,
+                            Username = "teamlead"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Created = new DateTime(2022, 8, 27, 13, 5, 57, 70, DateTimeKind.Local).AddTicks(320),
+                            DateOfBirth = new DateTime(2005, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EmailAddress = "admin@email.com",
+                            FirstName = "Emp3",
+                            LastName = "Test3",
+                            Password = "1234",
+                            Role = 2,
+                            Seniority = 2,
+                            Username = "admin"
                         });
+                });
+
+            modelBuilder.Entity("PortalPerfomanceEmployees.Models.Team", b =>
+                {
+                    b.Property<int>("TeamId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TeamId"), 1L, 1);
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TeamName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TeamId");
+
+                    b.HasIndex("Id");
+
+                    b.ToTable("Teams");
+                });
+
+            modelBuilder.Entity("PortalPerfomanceEmployees.Models.Employee", b =>
+                {
+                    b.HasOne("PortalPerfomanceEmployees.Models.Team", null)
+                        .WithMany("Employees")
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PortalPerfomanceEmployees.Models.Team", b =>
+                {
+                    b.HasOne("PortalPerfomanceEmployees.Models.Employee", "TeamLeader")
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TeamLeader");
+                });
+
+            modelBuilder.Entity("PortalPerfomanceEmployees.Models.Team", b =>
+                {
+                    b.Navigation("Employees");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PortalPerfomanceEmployees.Models
 {
@@ -18,6 +19,8 @@ namespace PortalPerfomanceEmployees.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         public DateTime Created { get; set; }
+        [ForeignKey("TeamId")]
+        public Nullable<int> TeamId { get; set; }
     }
 
     public enum Seniority
