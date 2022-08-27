@@ -15,6 +15,7 @@ namespace PortalPerfomanceEmployees.Models
         public DateTime DateOfBirth { get; set; }
         public Seniority Seniority { get; set; }
         public Role Role { get; set; }
+        public int TeamId { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         public DateTime Created { get; set; }
