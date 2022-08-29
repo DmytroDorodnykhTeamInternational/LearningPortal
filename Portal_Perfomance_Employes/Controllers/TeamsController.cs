@@ -7,7 +7,7 @@ using PortalPerfomanceEmployees.Models;
 namespace PortalPerfomanceEmployees.Controllers;
 [Route("api/[controller]")]
 [ApiController]
-//[Authorize(Roles = "Admin")]
+[Authorize(Roles = "Admin")]
 public class TeamsController : ControllerBase
 {
     private readonly AppDbContext _context;
