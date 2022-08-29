@@ -1,10 +1,18 @@
-﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the MIT license.  See License.txt in the project root for license information.
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace PortalPerfomanceEmployees.Models
 {
     public class EmployeeDTO
     {
+        [Required(ErrorMessage = "Please enter a user name")]
+        public string Username { get; set; } = "";
+        [Required(ErrorMessage = "Please enter a email")]
+        [EmailAddress]
+        public string EmailAddress { get; set; } = "";
+        [Required(ErrorMessage = "Please enter a password")]
+        [StringLength(255, ErrorMessage = "Must have at least 6 characters", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        public string Password { get; set; } = "";
         [Required(ErrorMessage = "Please enter a first name")]
         public string FirstName { get; set; } = "";
         [Required(ErrorMessage = "Please enter a last name")]
@@ -19,8 +27,8 @@ namespace PortalPerfomanceEmployees.Models
         [Required(ErrorMessage = "Please choose a role tier")]
         [Range(0, 2, ErrorMessage = "Please choose a correct role tier")]
         public Role? Role { get; set; }
-        // These fields are nullable because otherwise the [Required] attribute will not work
         [Required(ErrorMessage = "Please enter a group id")]
         public int TeamId { get; set; }
+        // These fields are nullable because otherwise the [Required] attribute will not work
     }
 }

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PortalPerfomanceEmployees.Data;
 using PortalPerfomanceEmployees.Models;
@@ -10,9 +9,9 @@ namespace PortalPerfomanceEmployees.Controllers
     [ApiController]
     public class EmployeeController : ControllerBase
     {
-        private readonly EmployeeContext _context;
+        private readonly AppDbContext _context;
 
-        public EmployeeController(EmployeeContext context)
+        public EmployeeController(AppDbContext context)
         {
             _context = context;
         }
@@ -28,19 +27,21 @@ namespace PortalPerfomanceEmployees.Controllers
         {
             var emp = await _context.Employees
                 .FirstOrDefaultAsync(e => e.Id == id);
-            return emp == null ? NotFound("Employee with specified Id was not found") : Ok(emp) ;
+            return emp == null ? NotFound("Employee with specified ID was not found") : Ok(emp);
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateEmployee(EmployeeDTO employee)
         {
             Employee newEmployee = new Employee();
+            newEmployee.Username = employee.Username;
+            newEmployee.Password = employee.Password;
+            newEmployee.EmailAddress = employee.EmailAddress;
             newEmployee.FirstName = employee.FirstName;
             newEmployee.LastName = employee.LastName;
             newEmployee.DateOfBirth = (DateTime)employee.DateOfBirth;
             newEmployee.Seniority = (Seniority)employee.Seniority;
             newEmployee.Role = (Role)employee.Role;
-            newEmployee.TeamId = employee.TeamId;
             newEmployee.Created = DateTime.Now;
             _context.Employees.Add(newEmployee);
             await _context.SaveChangesAsync();
@@ -52,13 +53,15 @@ namespace PortalPerfomanceEmployees.Controllers
         {
             var EmployeeToUpdate = await _context.Employees
                 .FirstOrDefaultAsync(e => e.Id == id);
-            if (EmployeeToUpdate == null) return NotFound("Employee with specified Id was not found");
+            if (EmployeeToUpdate == null) return NotFound("Employee specified that ID was not found");
+            EmployeeToUpdate.Username = employee.Username;
+            EmployeeToUpdate.Password = employee.Password;
+            EmployeeToUpdate.EmailAddress = employee.EmailAddress;
             EmployeeToUpdate.FirstName = employee.FirstName;
             EmployeeToUpdate.LastName = employee.LastName;
             EmployeeToUpdate.DateOfBirth = (DateTime)employee.DateOfBirth;
             EmployeeToUpdate.Seniority = (Seniority)employee.Seniority;
             EmployeeToUpdate.Role = (Role)employee.Role;
-            EmployeeToUpdate.TeamId = employee.TeamId;
             await _context.SaveChangesAsync();
             return Ok(await GetEmployees());
         }
@@ -68,7 +71,7 @@ namespace PortalPerfomanceEmployees.Controllers
         {
             var EmployeeToDelete = await _context.Employees
                 .FirstOrDefaultAsync(e => e.Id == id);
-            if (EmployeeToDelete == null) return NotFound("Employee with specified Id was not found");
+            if (EmployeeToDelete == null) return NotFound("Employee specified that ID was not found");
             _context.Employees.Remove(EmployeeToDelete);
             await _context.SaveChangesAsync();
             return Ok(await GetEmployees());

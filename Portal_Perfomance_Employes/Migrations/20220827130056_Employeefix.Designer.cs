@@ -11,9 +11,9 @@ using PortalPerfomanceEmployees.Data;
 
 namespace PortalPerfomanceEmployees.Migrations
 {
-    [DbContext(typeof(Data.AppDbContext))]
-    [Migration("20220818134224_schema-update")]
-    partial class schemaupdate
+    [DbContext(typeof(AppDbContext))]
+    [Migration("20220827130056_Employeefix")]
+    partial class Employeefix
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -38,6 +38,10 @@ namespace PortalPerfomanceEmployees.Migrations
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("EmailAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -46,8 +50,22 @@ namespace PortalPerfomanceEmployees.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Level")
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Role")
                         .HasColumnType("int");
+
+                    b.Property<int>("Seniority")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TeamId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -57,29 +75,44 @@ namespace PortalPerfomanceEmployees.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2022, 8, 18, 15, 42, 24, 610, DateTimeKind.Local).AddTicks(4540),
+                            Created = new DateTime(2022, 8, 27, 14, 0, 56, 403, DateTimeKind.Local).AddTicks(665),
                             DateOfBirth = new DateTime(2000, 5, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EmailAddress = "emp@email.com",
                             FirstName = "Emp1",
                             LastName = "Test1",
-                            Level = 0
+                            Password = "1234",
+                            Role = 0,
+                            Seniority = 0,
+                            TeamId = 2,
+                            Username = "emp"
                         },
                         new
                         {
                             Id = 2,
-                            Created = new DateTime(2022, 8, 18, 15, 42, 24, 610, DateTimeKind.Local).AddTicks(4569),
+                            Created = new DateTime(2022, 8, 27, 14, 0, 56, 403, DateTimeKind.Local).AddTicks(697),
                             DateOfBirth = new DateTime(1980, 3, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EmailAddress = "teamlead@email.com",
                             FirstName = "Emp2",
                             LastName = "Test2",
-                            Level = 1
+                            Password = "1234",
+                            Role = 1,
+                            Seniority = 1,
+                            TeamId = 2,
+                            Username = "teamlead"
                         },
                         new
                         {
                             Id = 3,
-                            Created = new DateTime(2022, 8, 18, 15, 42, 24, 610, DateTimeKind.Local).AddTicks(4571),
+                            Created = new DateTime(2022, 8, 27, 14, 0, 56, 403, DateTimeKind.Local).AddTicks(700),
                             DateOfBirth = new DateTime(2005, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EmailAddress = "admin@email.com",
                             FirstName = "Emp3",
                             LastName = "Test3",
-                            Level = 2
+                            Password = "1234",
+                            Role = 2,
+                            Seniority = 2,
+                            TeamId = 1,
+                            Username = "admin"
                         });
                 });
 #pragma warning restore 612, 618

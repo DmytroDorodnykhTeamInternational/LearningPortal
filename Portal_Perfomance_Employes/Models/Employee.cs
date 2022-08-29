@@ -1,12 +1,13 @@
-﻿// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the MIT license.  See License.txt in the project root for license information.
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace PortalPerfomanceEmployees.Models
 {
     public class Employee
     {
         public int Id { get; set; }
+        public string Username { get; set; } = "";
+        public string EmailAddress { get; set; } = "";
+        public string Password { get; set; } = "";
         public string FirstName { get; set; } = "";
         public string LastName { get; set; } = "";
         [DataType(DataType.Date)]
