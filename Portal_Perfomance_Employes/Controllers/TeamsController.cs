@@ -92,19 +92,28 @@ public class TeamsController : ControllerBase
     }
 
     [HttpPut("removeTeamMember")]
-    public async Task<IActionResult> RemoveTeamMember(int TeamId, int EmployeeId)
+    public async Task<IActionResult> RemoveTeamMember(int teamId, int employeeId)
     {
         var employeeToRemove = await _context.Employees
-            .FirstOrDefaultAsync(e => e.Id == EmployeeId);
+            .FirstOrDefaultAsync(e => e.Id == employeeId);
         if (employeeToRemove == null) return NotFound("This employee does not exist");
         var employeeTeamMember = await _context.TeamMembers
-            .FirstOrDefaultAsync(tm => tm.EmployeeId == EmployeeId && tm.TeamId == TeamId && tm.IsActive);
+            .FirstOrDefaultAsync(tm => tm.EmployeeId == employeeId && tm.TeamId == teamId && tm.IsActive);
         if (employeeTeamMember == null) return NotFound("This employee does not currently belong to that team or either of them does not exist");
+        if (employeeToRemove.Role == Role.Teamlead)
+        {
+            var team = await _context.Teams
+                .FirstOrDefaultAsync(t => t.TeamId == teamId);
+            if (team.TeamLeaderId == employeeId)
+            {
+                team.TeamLeaderId = null;
+            }
+        }
         employeeTeamMember.ToDate = DateTime.Now;
         employeeTeamMember.IsActive = false;
         employeeToRemove.TeamId = null;
         await _context.SaveChangesAsync();
-        return Ok(await GetTeamMembers(TeamId));
+        return Ok(await GetTeamMembers(teamId));
     }
 
     [HttpPut("setTl")]
