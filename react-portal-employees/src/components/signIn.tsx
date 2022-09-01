@@ -1,29 +1,54 @@
-import * as React from 'react';
-import { Link } from 'react-router-dom';
+import * as React from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import CssBaseline from '@mui/material/CssBaseline';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import TextField from '@mui/material/TextField';
-import Checkbox from '@mui/material/Checkbox';
-import Button from '@mui/material/Button';
-import Avatar from '@mui/material/Avatar';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import CssBaseline from "@mui/material/CssBaseline";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import TextField from "@mui/material/TextField";
+import Checkbox from "@mui/material/Checkbox";
+import Button from "@mui/material/Button";
+import Avatar from "@mui/material/Avatar";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+
+import API from "../services/api/ApiConfig";
+import Cookies from "js-cookie";
 
 const theme = createTheme();
 
 export default function SignIn() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  let navigate = useNavigate();
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
-      email: data.get('email'),
-      password: data.get('password')
+      email: data.get("email"),
+      password: data.get("password"),
+      remember: data.get("remember") != null,
     });
+
+    const response = await API.post("/Login", {
+      username: data.get("email"),
+      password: data.get("password"),
+    });
+
+    console.log(response);
+    console.log(response.data);
+
+    if (response.status === 200) {
+      if (data.get("remember") != null) {
+        Cookies.set("user_session", encodeURIComponent(response.data), {
+          expires: 365,
+        });
+      } else {
+        Cookies.set("user_session", encodeURIComponent(response.data));
+      }
+      navigate("/", { replace: true });
+    }
   };
 
   return (
@@ -33,17 +58,23 @@ export default function SignIn() {
         <Box
           sx={{
             marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center'
-          }}>
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ mt: 1 }}
+          >
             <TextField
               margin="normal"
               autoFocus
@@ -65,15 +96,27 @@ export default function SignIn() {
               type="password"
             />
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
+              control={
+                <Checkbox
+                  value="remember"
+                  id="remember"
+                  name="remember"
+                  color="primary"
+                />
+              }
               label="Remember me"
             />
-            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
               Sign In
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link to="#">{'Forgot password?'}</Link>
+                <Link to="#">{"Forgot password?"}</Link>
               </Grid>
               <Grid item>
                 <Link to="/signup">{"Don't have an account? Sign Up"}</Link>
