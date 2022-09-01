@@ -116,7 +116,7 @@ public class TeamsController : ControllerBase
         return Ok(await GetTeamMembers(teamId));
     }
 
-    [HttpPut("setTl")]
+    [HttpPut("setTeamLeader")]
     public async Task<IActionResult> SetTeamLeader(int teamId, int teamLeaderId)
     {
         // Retrieve new and old team leaders and teams, validate data
