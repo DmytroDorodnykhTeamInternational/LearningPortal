@@ -67,7 +67,7 @@ public class TeamsController : ControllerBase
     }
 
     [HttpPut("addTeamMember")]
-    public async Task<IActionResult> AddTeamMember(int employeeId, int teamId)
+    public async Task<IActionResult> AddTeamMember(int teamId, int employeeId)
     {
         var employeeToAdd = await _context.Employees
             .FirstOrDefaultAsync(t => t.Id == employeeId);
