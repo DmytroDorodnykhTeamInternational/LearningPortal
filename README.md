@@ -23,6 +23,14 @@ You may learn more about it from https://eslint.org/
 
 For back-end there is used Asp.NET CORE. 
 
+To run back-end, run the solution in Visual Studio.
+
+To run Docker, use
+
+```bash
+powershell.exe -executionpolicy bypass -file .\run.ps1
+```
+
 ## Contributors
 
 [Dmytro](https://github.com/DmytroDorodnykhTeamInternational)
