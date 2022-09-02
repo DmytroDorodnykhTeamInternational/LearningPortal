@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using PortalPerfomanceEmployees.Data;
 using PortalPerfomanceEmployees.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PortalPerfomanceEmployees.Controllers
 {
@@ -31,6 +32,7 @@ namespace PortalPerfomanceEmployees.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateEmployee(EmployeeDTO employee)
         {
             Employee newEmployee = new Employee();
@@ -49,6 +51,7 @@ namespace PortalPerfomanceEmployees.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateEmployee(EmployeeDTO employee, int id)
         {
             var EmployeeToUpdate = await _context.Employees
@@ -67,6 +70,7 @@ namespace PortalPerfomanceEmployees.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteEmployee(int id)
         {
             var EmployeeToDelete = await _context.Employees
