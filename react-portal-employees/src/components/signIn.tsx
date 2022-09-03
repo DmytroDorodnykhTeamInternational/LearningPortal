@@ -36,9 +36,6 @@ export default function SignIn() {
       password: data.get("password"),
     });
 
-    console.log(response);
-    console.log(response.data);
-
     if (response.status === 200) {
       if (data.get("remember") != null) {
         Cookies.set("user_session", encodeURIComponent(response.data), {
