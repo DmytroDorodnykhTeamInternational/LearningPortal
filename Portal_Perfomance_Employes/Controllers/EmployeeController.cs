@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using PortalPerfomanceEmployees.Data;
 using PortalPerfomanceEmployees.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PortalPerfomanceEmployees.Controllers
 {
@@ -29,8 +30,9 @@ namespace PortalPerfomanceEmployees.Controllers
                 .FirstOrDefaultAsync(e => e.Id == id);
             return emp == null ? NotFound("Employee with specified ID was not found") : Ok(emp);
         }
-
+        
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateEmployee(EmployeeDTO employee)
         {
             Employee newEmployee = new Employee();
@@ -43,13 +45,13 @@ namespace PortalPerfomanceEmployees.Controllers
             newEmployee.Seniority = (Seniority)employee.Seniority;
             newEmployee.Role = (Role)employee.Role;
             newEmployee.Created = DateTime.Now;
-            newEmployee.TeamId = employee.TeamId != null ? employee.TeamId : null;
             _context.Employees.Add(newEmployee);
             await _context.SaveChangesAsync();
             return Ok(await GetEmployees());
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateEmployee(EmployeeDTO employee, int id)
         {
             var EmployeeToUpdate = await _context.Employees
@@ -63,12 +65,12 @@ namespace PortalPerfomanceEmployees.Controllers
             EmployeeToUpdate.DateOfBirth = (DateTime)employee.DateOfBirth;
             EmployeeToUpdate.Seniority = (Seniority)employee.Seniority;
             EmployeeToUpdate.Role = (Role)employee.Role;
-            EmployeeToUpdate.TeamId = employee.TeamId;
             await _context.SaveChangesAsync();
             return Ok(await GetEmployees());
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteEmployee(int id)
         {
             var EmployeeToDelete = await _context.Employees
