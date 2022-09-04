@@ -12,8 +12,8 @@ using PortalPerfomanceEmployees.Data;
 namespace PortalPerfomanceEmployees.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220827130056_Employeefix")]
-    partial class Employeefix
+    [Migration("20220829201551_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -60,7 +60,7 @@ namespace PortalPerfomanceEmployees.Migrations
                     b.Property<int>("Seniority")
                         .HasColumnType("int");
 
-                    b.Property<int>("TeamId")
+                    b.Property<int?>("TeamId")
                         .HasColumnType("int");
 
                     b.Property<string>("Username")
@@ -75,7 +75,7 @@ namespace PortalPerfomanceEmployees.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2022, 8, 27, 14, 0, 56, 403, DateTimeKind.Local).AddTicks(665),
+                            Created = new DateTime(2022, 8, 29, 22, 15, 51, 350, DateTimeKind.Local).AddTicks(7078),
                             DateOfBirth = new DateTime(2000, 5, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailAddress = "emp@email.com",
                             FirstName = "Emp1",
@@ -83,13 +83,13 @@ namespace PortalPerfomanceEmployees.Migrations
                             Password = "1234",
                             Role = 0,
                             Seniority = 0,
-                            TeamId = 2,
+                            TeamId = 1,
                             Username = "emp"
                         },
                         new
                         {
                             Id = 2,
-                            Created = new DateTime(2022, 8, 27, 14, 0, 56, 403, DateTimeKind.Local).AddTicks(697),
+                            Created = new DateTime(2022, 8, 29, 22, 15, 51, 350, DateTimeKind.Local).AddTicks(7121),
                             DateOfBirth = new DateTime(1980, 3, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailAddress = "teamlead@email.com",
                             FirstName = "Emp2",
@@ -97,13 +97,13 @@ namespace PortalPerfomanceEmployees.Migrations
                             Password = "1234",
                             Role = 1,
                             Seniority = 1,
-                            TeamId = 2,
+                            TeamId = 1,
                             Username = "teamlead"
                         },
                         new
                         {
                             Id = 3,
-                            Created = new DateTime(2022, 8, 27, 14, 0, 56, 403, DateTimeKind.Local).AddTicks(700),
+                            Created = new DateTime(2022, 8, 29, 22, 15, 51, 350, DateTimeKind.Local).AddTicks(7123),
                             DateOfBirth = new DateTime(2005, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailAddress = "admin@email.com",
                             FirstName = "Emp3",
@@ -111,8 +111,97 @@ namespace PortalPerfomanceEmployees.Migrations
                             Password = "1234",
                             Role = 2,
                             Seniority = 2,
-                            TeamId = 1,
                             Username = "admin"
+                        });
+                });
+
+            modelBuilder.Entity("PortalPerfomanceEmployees.Models.Team", b =>
+                {
+                    b.Property<int>("TeamId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TeamId"), 1L, 1);
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("TeamLeaderId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TeamName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TeamId");
+
+                    b.ToTable("Teams");
+
+                    b.HasData(
+                        new
+                        {
+                            TeamId = 1,
+                            DateCreated = new DateTime(2022, 8, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TeamLeaderId = 2,
+                            TeamName = "Team number one"
+                        });
+                });
+
+            modelBuilder.Entity("PortalPerfomanceEmployees.Models.TeamMember", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("FromDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TeamId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ToDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TeamMembers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            EmployeeId = 1,
+                            FirstName = "Emp1",
+                            FromDate = new DateTime(2022, 8, 29, 22, 15, 51, 350, DateTimeKind.Local).AddTicks(7139),
+                            IsActive = true,
+                            LastName = "Test1",
+                            TeamId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            EmployeeId = 2,
+                            FirstName = "Emp2",
+                            FromDate = new DateTime(2022, 8, 29, 22, 15, 51, 350, DateTimeKind.Local).AddTicks(7144),
+                            IsActive = true,
+                            LastName = "Test2",
+                            TeamId = 1
                         });
                 });
 #pragma warning restore 612, 618
