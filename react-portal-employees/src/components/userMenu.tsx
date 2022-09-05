@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import API from "../services/api/ApiConfig";
+import { RefreshToken } from "../services/api/ApiRequests";
 import { useJwt } from "react-jwt";
 import Cookies from "js-cookie";
 
@@ -42,13 +42,8 @@ function UserMenu() {
 
   useEffect(() => {
     const refreshToken = async () => {
-      let response = await API.post(
-        "/Login/RefreshToken?oldToken=" + Cookies.get("user_session")
-      );
-
-      if (response.status === 200) {
-        console.log("@#@#!");
-        Cookies.set("user_session", response.data);
+      var isSuccessfully = RefreshToken();
+      if (isSuccessfully) {
         reEvaluateToken(Cookies.get("user_session"));
       }
     };

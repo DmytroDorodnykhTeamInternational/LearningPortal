@@ -34,7 +34,7 @@ const theme = createTheme({
   },
 });
 
-const ResponsiveAppBar = () => {
+const NavBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -133,4 +133,4 @@ const ResponsiveAppBar = () => {
     </div>
   );
 };
-export default ResponsiveAppBar;
+export default NavBar;

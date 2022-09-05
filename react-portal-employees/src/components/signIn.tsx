@@ -14,8 +14,7 @@ import Avatar from "@mui/material/Avatar";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 
-import API from "../services/api/ApiConfig";
-import Cookies from "js-cookie";
+import { AuthRequest } from "../services/api/ApiRequests";
 
 const theme = createTheme();
 
@@ -25,25 +24,8 @@ export default function SignIn() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-      remember: data.get("remember") != null,
-    });
-
-    const response = await API.post("/Login", {
-      username: data.get("email"),
-      password: data.get("password"),
-    });
-
-    if (response.status === 200) {
-      if (data.get("remember") != null) {
-        Cookies.set("user_session", encodeURIComponent(response.data), {
-          expires: 365,
-        });
-      } else {
-        Cookies.set("user_session", encodeURIComponent(response.data));
-      }
+    var isSuccessfully = AuthRequest(data);
+    if (isSuccessfully) {
       navigate("/", { replace: true });
     }
   };
