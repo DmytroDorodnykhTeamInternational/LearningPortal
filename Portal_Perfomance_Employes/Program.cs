@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using PortalPerfomanceEmployees;
 
 var DevelopmentSpecificOrigins = "_developmentSpecificOrigins";
 var ProductionSpecificOrigins = "_productionSpecificOrigins";
@@ -59,10 +60,7 @@ builder.Services.AddSwaggerGen(setup =>
         }
     };
     setup.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
-    setup.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        { jwtSecurityScheme, Array.Empty<string>() }
-    });
+    setup.OperationFilter<AuthResponsesOperationFilter>();
 });
 builder.Configuration.AddUserSecrets<Program>(true);
 builder.Services.AddDbContext<PortalPerfomanceEmployees.Data.AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("EmployeeDbString")));

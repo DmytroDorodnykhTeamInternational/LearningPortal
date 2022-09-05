@@ -18,12 +18,14 @@ namespace PortalPerfomanceEmployees.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetEmployees()
         {
             return Ok(await _context.Employees.ToListAsync());
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetEmployee(int id)
         {
             var emp = await _context.Employees
