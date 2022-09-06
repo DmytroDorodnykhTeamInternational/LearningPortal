@@ -20,14 +20,6 @@ namespace PortalPerfomanceEmployees.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         public DateTime Created { get; set; }
-    }
-
-    public enum Seniority
-    {
-        Junior, MidLevel, Senior
-    }
-    public enum Role
-    {
-        Employee, Teamlead, Admin
+        public ICollection<TeamMember> TeamMemberships { get; set; } = new List<TeamMember>();
     }
 }

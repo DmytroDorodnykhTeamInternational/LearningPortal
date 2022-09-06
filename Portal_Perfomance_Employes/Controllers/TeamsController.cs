@@ -73,7 +73,7 @@ public class TeamsController : ControllerBase
             .FirstOrDefaultAsync(t => t.Id == employeeId);
         if (employeeToAdd == null) return NotFound("An employee with that ID does not exist");
         var teamMemberToAdd = await _context.TeamMembers
-            .FirstOrDefaultAsync(tm => tm.Id == employeeId && tm.IsActive == true);
+            .FirstOrDefaultAsync(tm => tm.Id == employeeId && tm.IsActive);
         if (teamMemberToAdd != null)
         {
             teamMemberToAdd.ToDate = DateTime.Now;
@@ -91,6 +91,7 @@ public class TeamsController : ControllerBase
             FromDate = DateTime.Now,
             IsActive = true
         };
+        employeeToAdd.TeamMemberships.Add(teamMember);
         await _context.TeamMembers.AddAsync(teamMember);
         await _context.SaveChangesAsync();
         return Ok(await GetTeam(teamId));
@@ -113,6 +114,12 @@ public class TeamsController : ControllerBase
             {
                 team.TeamLeaderId = null;
             }
+        }
+        var membership = employeeToRemove.TeamMemberships.FirstOrDefault(tm => tm.IsActive);
+        if (membership != null)
+        {
+            membership.ToDate = DateTime.Now;
+            membership.IsActive = false;
         }
         employeeTeamMember.ToDate = DateTime.Now;
         employeeTeamMember.IsActive = false;
@@ -145,6 +152,12 @@ public class TeamsController : ControllerBase
             {
                 teamMemberOldTl.ToDate = DateTime.Now;
                 teamMemberOldTl.IsActive = false;
+                var membership = employeeOldTl.TeamMemberships.FirstOrDefault(tm => tm.IsActive);
+                if (membership != null)
+                {
+                    membership.ToDate = DateTime.Now;
+                    membership.IsActive = false;
+                }
             }
         }
         team.TeamLeaderId = employeeTl.Id;
@@ -164,6 +177,7 @@ public class TeamsController : ControllerBase
             FromDate = DateTime.Now,
             IsActive = true
         };
+        employeeTl.TeamMemberships.Add(teamMember);
         await _context.TeamMembers.AddAsync(teamMember);
         await _context.SaveChangesAsync();
         return Ok(await GetTeam(teamId));
