@@ -16,14 +16,15 @@ const theme = createTheme();
 export default function CreateEmployee() {
     const [input, setInput] = useState({
       username: '',
+      EmailAddress: '',
       password: '',
-      confirmPassword: '',
-      email: '',
       FirstName: '',
       LastName: '',
       DateOfBirth: '',
-      Seniority:''
+      Seniority: -1,
+      Role: -1
     });
+    const [ConfirmPwd, setConfirmPwd] = useState("")
     const [error, setError] = useState({
       username: '',
       password: '',
@@ -31,8 +32,7 @@ export default function CreateEmployee() {
       email: '',
       FirstName: '',
       LastName: '',
-      DateOfBirth: '',
-      Seniority:''
+      DateOfBirth: ''
     })   
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -43,36 +43,33 @@ export default function CreateEmployee() {
           if (value != "") MsgEr = value;
         }
       );
-
       if (MsgEr != ""){
         alert(MsgEr);
         return
       } 
-      
-      const data = new FormData(event.currentTarget);
-      var json = {
-        UserName: data.get('username'),
-        EmailAddress: data.get('email'),
-        Password: data.get('password'),
-        FirstName: data.get('FirstName'),
-        LastName: data.get('LastName'),
-        DateOfBirth: data.get('DateOfBirth'),
-        Seniority: Number(data.get('Seniority')),
-        Role: Number(data.get('Role'))
-      };
-      ApiEmployee.CreateEmployee(json);      
+      ApiEmployee.CreateEmployee(JSON.stringify(input));
     };
 
-    const checkValidation = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    const checkValidation = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => {
       const { name, value } = e.target;
-      setInput(prev => ({
-        ...prev,
-        [name]: value
-      }));
+      if (name == "Seniority" || name == "Role")
+      {
+        setInput(prev => ({
+          ...prev,
+          [name]: Number(value)
+        }));
+      }
+      else if (name == "confirmPassword") { setConfirmPwd(value); }
+      else{
+        setInput(prev => ({
+          ...prev,
+          [name]: value
+        }));
+      }
       validateInput(e);
     };
 
-    const validateInput = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    const validateInput = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => {
       let { name, value } = e.target;
       setError(prev => {
         const stateObj = { ...prev, [name]: "" };
@@ -87,10 +84,10 @@ export default function CreateEmployee() {
           case "password":
             if (!value) {
               stateObj[name] = "Please enter Password.";
-            } else if (input.confirmPassword && value !== input.confirmPassword) {
+            } else if (ConfirmPwd && value !== ConfirmPwd) {
               stateObj["confirmPassword"] = "Password and Confirm Password does not match.";
             } else {
-              stateObj["confirmPassword"] = input.confirmPassword ? "" : error.confirmPassword;
+              stateObj["confirmPassword"] = ConfirmPwd ? "" : error.confirmPassword;
             }
             break;
    
@@ -193,13 +190,15 @@ export default function CreateEmployee() {
                 helperText={error.DateOfBirth}
               />
               <InputLabel htmlFor="Seniority">Seniority</InputLabel>
-              <NativeSelect id="Seniority" name="Seniority" fullWidth required autoFocus>
+              <NativeSelect id="Seniority" name="Seniority" fullWidth required autoFocus onChange={e => checkValidation(e)}>
+                <option value=""></option>
                 <option value="0">Junior</option>
                 <option value="1">Mid Level</option>
                 <option value="2">Senior</option>
               </NativeSelect>
               <InputLabel htmlFor="Role">Role</InputLabel>
-              <NativeSelect id="Role" name="Role" fullWidth required autoFocus>
+              <NativeSelect id="Role" name="Role" fullWidth required autoFocus onChange={e => checkValidation(e)}>
+                <option value=""></option>
                 <option value="0">Employee</option>
                 <option value="1">Team lead</option>
                 <option value="2">Admin</option>
@@ -211,7 +210,7 @@ export default function CreateEmployee() {
                 fullWidth
                 id="email"
                 label="Email Address"
-                name="email"
+                name="EmailAddress"
                 autoComplete="email"
                 type="text"
                 onChange={e => checkValidation(e)}
