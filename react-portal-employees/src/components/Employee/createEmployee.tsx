@@ -37,6 +37,18 @@ export default function CreateEmployee() {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
+      let MsgEr = "";
+      Object.entries(error).forEach(
+        ([key, value]) => {
+          if (value != "") MsgEr = value;
+        }
+      );
+
+      if (MsgEr != ""){
+        alert(MsgEr);
+        return
+      } 
+      
       const data = new FormData(event.currentTarget);
       var json = {
         UserName: data.get('username'),
