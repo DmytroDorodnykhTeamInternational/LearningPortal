@@ -45,9 +45,9 @@ function MenuAdmin() {
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
       >
-        <MenuItem key="Item 1" onClick={handleCloseUserMenu}>
-          <Link to="#" style={{ color: "#000" }}>
-            Item 1
+        <MenuItem key="Employees" onClick={handleCloseUserMenu}>
+          <Link to="/employees" style={{ color: "#000" }}>
+            Employees
           </Link>
         </MenuItem>
         <MenuItem key="Item2" onClick={handleCloseUserMenu}>
