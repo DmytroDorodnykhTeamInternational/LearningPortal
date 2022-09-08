@@ -158,14 +158,9 @@ export default function ResponsiveDrawer(props: Props) {
                         <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            label="C#"
-                        >
-                            <MenuItem value={10}>A1</MenuItem>
-                            <MenuItem value={20}>A2</MenuItem>
-                            <MenuItem value={30}>B1</MenuItem>
-                            <MenuItem value={40}>B2</MenuItem>
-                            <MenuItem value={50}>C1</MenuItem>
-                            <MenuItem value={60}>C2</MenuItem>
+                            label="English">
+                            <MenuItem value={10}>Novice</MenuItem>
+                            <MenuItem value={20}>Professional</MenuItem>
                         </Select>
                     </FormControl>
                     <FormControl fullWidth sx={{
@@ -177,10 +172,7 @@ export default function ResponsiveDrawer(props: Props) {
                             id="demo-simple-select"
                             label="Leadership">
                             <MenuItem value={10}>Novice</MenuItem>
-                            <MenuItem value={20}>Advanced Beginner</MenuItem>
-                            <MenuItem value={30}>Competent</MenuItem>
-                            <MenuItem value={40}>Proficient</MenuItem>
-                            <MenuItem value={50}>Expert</MenuItem>
+                            <MenuItem value={20}>Professional</MenuItem>
                         </Select>
                     </FormControl>
                     <FormControl fullWidth sx={{
@@ -192,10 +184,7 @@ export default function ResponsiveDrawer(props: Props) {
                             id="demo-simple-select"
                             label="Communication">
                             <MenuItem value={10}>Novice</MenuItem>
-                            <MenuItem value={20}>Advanced Beginner</MenuItem>
-                            <MenuItem value={30}>Competent</MenuItem>
-                            <MenuItem value={40}>Proficient</MenuItem>
-                            <MenuItem value={50}>Expert</MenuItem>
+                            <MenuItem value={20}>Professional</MenuItem>
                         </Select>
                     </FormControl>
                 </FormGroup>
