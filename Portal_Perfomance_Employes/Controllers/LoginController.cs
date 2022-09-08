@@ -41,16 +41,17 @@ namespace PortalPerfomanceEmployees.Controllers
             return NotFound("Username or password not found.");
         }
 
-        [Route("GetUserId")]
-        [HttpPost]
-        public IActionResult UserId()
+        [Route("GetUserRole")]
+        [HttpGet]
+        [Authorize]
+        public IActionResult UserRole()
         {
-            return Ok(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            return Ok(User.FindFirst(ClaimTypes.Role)?.Value);
         }
 
         [Route("RefreshToken")]
         [HttpPost]
-        public IActionResult RefreshToken (string oldToken)
+        public IActionResult RefreshToken(string oldToken)
         {
             var handler = new JwtSecurityTokenHandler();
             if (handler.CanReadToken(oldToken))

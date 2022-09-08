@@ -4,29 +4,56 @@ import { Link, useNavigate } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import FormHelperText from "@mui/material/FormHelperText";
 import CssBaseline from "@mui/material/CssBaseline";
 import Typography from "@mui/material/Typography";
+import AlertTitle from "@mui/material/AlertTitle";
 import Container from "@mui/material/Container";
 import TextField from "@mui/material/TextField";
 import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
+import Alert from "@mui/material/Alert";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 
+// import TokenValidate from "../services/tokenValidate";
 import { AuthRequest } from "../services/api/ApiRequests";
+import { GetRole } from "../services/api/ApiRequests";
+import { isValid, isInvalid } from "../redux/slice/authSlice";
+import { visitor, user, admin } from "../redux/slice/roleSlice";
+import { useAppDispatch } from "./../redux/hooks";
 
 const theme = createTheme();
 
 export default function SignIn() {
+  const [errorText, setErrorText] = React.useState("");
+
   let navigate = useNavigate();
+
+  const dispatch = useAppDispatch();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    var isSuccessfully = AuthRequest(data);
-    if (isSuccessfully) {
+    var isSuccessfully = await AuthRequest(data);
+    if (isSuccessfully === true) {
+      // TokenValidate();
+      dispatch(isValid());
+      let data = GetRole();
+      if (data) {
+        if ((await data) === "Admin") {
+          dispatch(admin());
+        } else if ((await data) === "Employee" || (await data) === "Teamlead") {
+          dispatch(user());
+        } else {
+          dispatch(visitor());
+        }
+      }
       navigate("/", { replace: true });
+    } else {
+      dispatch(isInvalid());
+      setErrorText("Wrong username or password!");
     }
   };
 
@@ -48,21 +75,16 @@ export default function SignIn() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 1 }}
-          >
+          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               autoFocus
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id="username"
+              label="Username"
+              name="username"
+              autoComplete="username"
             />
             <TextField
               margin="normal"
@@ -101,6 +123,14 @@ export default function SignIn() {
                 <Link to="/signup">{"Don't have an account? Sign Up"}</Link>
               </Grid>
             </Grid>
+            {errorText && (
+              <FormHelperText error sx={{ mt: 5 }}>
+                <Alert severity="error">
+                  <AlertTitle>Error</AlertTitle>
+                  {errorText}
+                </Alert>
+              </FormHelperText>
+            )}
           </Box>
         </Box>
       </Container>

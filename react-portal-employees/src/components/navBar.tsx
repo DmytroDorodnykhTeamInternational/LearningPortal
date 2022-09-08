@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route, Link } from "react-router-dom";
 
-import UserMenu from "./userMenu";
+import MenuContainer from "./menu/menuContainer";
 
 import Home from "./home";
 import About from "./about";
@@ -118,7 +118,7 @@ const NavBar = () => {
                   </Link>
                 </MenuItem>
               </Box>
-              <UserMenu />
+              <MenuContainer />
             </Toolbar>
           </Container>
         </AppBar>

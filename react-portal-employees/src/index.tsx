@@ -3,9 +3,14 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import NavBar from "./components/navBar";
 
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <BrowserRouter>
-    <NavBar />
-  </BrowserRouter>
+  <Provider store={store}>
+    <BrowserRouter>
+      <NavBar />
+    </BrowserRouter>
+  </Provider>
 );
