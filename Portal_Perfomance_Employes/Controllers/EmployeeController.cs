@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PortalPerfomanceEmployees.Data;
 using PortalPerfomanceEmployees.Models;
@@ -8,6 +8,7 @@ namespace PortalPerfomanceEmployees.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class EmployeeController : ControllerBase
     {
         private readonly AppDbContext _context;
@@ -18,14 +19,12 @@ namespace PortalPerfomanceEmployees.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public async Task<IActionResult> GetEmployees()
         {
             return Ok(await _context.Employees.ToListAsync());
         }
 
         [HttpGet("{id}")]
-        [AllowAnonymous]
         public async Task<IActionResult> GetEmployee(int id)
         {
             var emp = await _context.Employees
