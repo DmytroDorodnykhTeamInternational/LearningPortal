@@ -78,6 +78,11 @@ namespace PortalPerfomanceEmployees.Controllers
                 .FirstOrDefaultAsync(e => e.Id == id);
             if (EmployeeToDelete == null) return NotFound("Employee specified that ID was not found");
             _context.Employees.Remove(EmployeeToDelete);
+            var teamMemberships = await _context.TeamMembers.Where(x => x.EmployeeId == id).ToListAsync();
+            foreach (var teamMembership in teamMemberships)
+            {
+                _context.TeamMembers.Remove(teamMembership);
+            }
             await _context.SaveChangesAsync();
             return Ok(await GetEmployees());
         }
