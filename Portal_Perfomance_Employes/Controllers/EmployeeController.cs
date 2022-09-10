@@ -19,6 +19,7 @@ namespace PortalPerfomanceEmployees.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetEmployees()
         {
             return Ok(await _context.Employees.ToListAsync());
@@ -31,7 +32,7 @@ namespace PortalPerfomanceEmployees.Controllers
                 .FirstOrDefaultAsync(e => e.Id == id);
             return emp == null ? NotFound("Employee with specified ID was not found") : Ok(emp);
         }
-        
+
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateEmployee(EmployeeDTO employee)
@@ -51,7 +52,7 @@ namespace PortalPerfomanceEmployees.Controllers
             return Ok(await GetEmployees());
         }
 
-        [HttpPut("{id}")]
+        [HttpPost("{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateEmployee(EmployeeDTO employee, int id)
         {
