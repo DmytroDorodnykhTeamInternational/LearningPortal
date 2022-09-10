@@ -1,12 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-
 import Home from './home';
-import About from './about';
+import Evaluation from './evaluation';
 import Contact from './contact';
 import SignUp from './signUp';
 import SignIn from './signIn';
-
 import IconButton from '@mui/material/IconButton';
 import Container from '@mui/material/Container';
 import MenuItem from '@mui/material/MenuItem';
@@ -16,7 +14,6 @@ import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import Box from '@mui/material/Box';
-
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import LoginIcon from '@mui/icons-material/Login';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -95,9 +92,9 @@ const ResponsiveAppBar = () => {
                       Home
                     </Link>
                   </MenuItem>
-                  <MenuItem key="About Us" onClick={handleCloseNavMenu}>
-                    <Link to="/about" style={{ color: '#000' }}>
-                      About Us
+                  <MenuItem key="Evaluation" onClick={handleCloseNavMenu}>
+                    <Link to="/evaluation" style={{ color: '#000' }}>
+                      Evaluation
                     </Link>
                   </MenuItem>
                   <MenuItem key="Contact Us" onClick={handleCloseNavMenu}>
@@ -114,9 +111,9 @@ const ResponsiveAppBar = () => {
                     <Button color="secondary">Home</Button>
                   </Link>
                 </MenuItem>
-                <MenuItem key="About Us" onClick={handleCloseNavMenu}>
-                  <Link to="/about">
-                    <Button color="secondary">About Us</Button>
+                <MenuItem key="Evaluation" onClick={handleCloseNavMenu}>
+                  <Link to="/evaluation">
+                    <Button color="secondary">Evaluation</Button>
                   </Link>
                 </MenuItem>
                 <MenuItem key="Contact Us" onClick={handleCloseNavMenu}>
@@ -190,7 +187,7 @@ const ResponsiveAppBar = () => {
       </ThemeProvider>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
+        <Route path="/evaluation" element={<Evaluation />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
