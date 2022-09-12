@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PortalPerfomanceEmployees.Data;
 
@@ -11,9 +12,10 @@ using PortalPerfomanceEmployees.Data;
 namespace PortalPerfomanceEmployees.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220912153651_AllEntities")]
+    partial class AllEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -93,7 +95,7 @@ namespace PortalPerfomanceEmployees.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2022, 9, 12, 16, 52, 9, 611, DateTimeKind.Local).AddTicks(43),
+                            Created = new DateTime(2022, 9, 12, 16, 36, 51, 716, DateTimeKind.Local).AddTicks(6139),
                             DateOfBirth = new DateTime(2000, 5, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailAddress = "emp@email.com",
                             FirstName = "Emp1",
@@ -106,7 +108,7 @@ namespace PortalPerfomanceEmployees.Migrations
                         new
                         {
                             Id = 2,
-                            Created = new DateTime(2022, 9, 12, 16, 52, 9, 611, DateTimeKind.Local).AddTicks(72),
+                            Created = new DateTime(2022, 9, 12, 16, 36, 51, 716, DateTimeKind.Local).AddTicks(6167),
                             DateOfBirth = new DateTime(1980, 3, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailAddress = "teamlead@email.com",
                             FirstName = "Emp2",
@@ -119,7 +121,7 @@ namespace PortalPerfomanceEmployees.Migrations
                         new
                         {
                             Id = 3,
-                            Created = new DateTime(2022, 9, 12, 16, 52, 9, 611, DateTimeKind.Local).AddTicks(75),
+                            Created = new DateTime(2022, 9, 12, 16, 36, 51, 716, DateTimeKind.Local).AddTicks(6170),
                             DateOfBirth = new DateTime(2005, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailAddress = "admin@email.com",
                             FirstName = "Emp3",
@@ -146,7 +148,7 @@ namespace PortalPerfomanceEmployees.Migrations
                     b.Property<int>("CertificationId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DateCertificate")
+                    b.Property<DateTime>("DateCertified")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("EmployeeId")
@@ -349,7 +351,7 @@ namespace PortalPerfomanceEmployees.Migrations
                             Id = 1,
                             EmployeeId = 1,
                             FirstName = "Emp1",
-                            FromDate = new DateTime(2022, 9, 12, 16, 52, 9, 611, DateTimeKind.Local).AddTicks(87),
+                            FromDate = new DateTime(2022, 9, 12, 16, 36, 51, 716, DateTimeKind.Local).AddTicks(6185),
                             IsActive = true,
                             LastName = "Test1",
                             TeamId = 1
@@ -359,7 +361,7 @@ namespace PortalPerfomanceEmployees.Migrations
                             Id = 2,
                             EmployeeId = 2,
                             FirstName = "Emp2",
-                            FromDate = new DateTime(2022, 9, 12, 16, 52, 9, 611, DateTimeKind.Local).AddTicks(90),
+                            FromDate = new DateTime(2022, 9, 12, 16, 36, 51, 716, DateTimeKind.Local).AddTicks(6189),
                             IsActive = true,
                             LastName = "Test2",
                             TeamId = 1

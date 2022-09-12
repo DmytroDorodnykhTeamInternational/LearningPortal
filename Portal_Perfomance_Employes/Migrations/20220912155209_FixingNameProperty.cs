@@ -5,92 +5,92 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PortalPerfomanceEmployees.Migrations
 {
-    public partial class removeTeamIdfromEmployee : Migration
+    public partial class FixingNameProperty : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "TeamId",
-                table: "Employees");
+            migrationBuilder.RenameColumn(
+                name: "DateCertified",
+                table: "EmployeeCertifications",
+                newName: "DateCertificate");
 
             migrationBuilder.UpdateData(
                 table: "Employees",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "Created",
-                value: new DateTime(2022, 9, 4, 21, 38, 14, 243, DateTimeKind.Local).AddTicks(4825));
+                value: new DateTime(2022, 9, 12, 16, 52, 9, 611, DateTimeKind.Local).AddTicks(43));
 
             migrationBuilder.UpdateData(
                 table: "Employees",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "Created",
-                value: new DateTime(2022, 9, 4, 21, 38, 14, 243, DateTimeKind.Local).AddTicks(4869));
+                value: new DateTime(2022, 9, 12, 16, 52, 9, 611, DateTimeKind.Local).AddTicks(72));
 
             migrationBuilder.UpdateData(
                 table: "Employees",
                 keyColumn: "Id",
                 keyValue: 3,
                 column: "Created",
-                value: new DateTime(2022, 9, 4, 21, 38, 14, 243, DateTimeKind.Local).AddTicks(4873));
+                value: new DateTime(2022, 9, 12, 16, 52, 9, 611, DateTimeKind.Local).AddTicks(75));
 
             migrationBuilder.UpdateData(
                 table: "TeamMembers",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "FromDate",
-                value: new DateTime(2022, 9, 4, 21, 38, 14, 243, DateTimeKind.Local).AddTicks(4956));
+                value: new DateTime(2022, 9, 12, 16, 52, 9, 611, DateTimeKind.Local).AddTicks(87));
 
             migrationBuilder.UpdateData(
                 table: "TeamMembers",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "FromDate",
-                value: new DateTime(2022, 9, 4, 21, 38, 14, 243, DateTimeKind.Local).AddTicks(4962));
+                value: new DateTime(2022, 9, 12, 16, 52, 9, 611, DateTimeKind.Local).AddTicks(90));
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "TeamId",
-                table: "Employees",
-                type: "int",
-                nullable: true);
+            migrationBuilder.RenameColumn(
+                name: "DateCertificate",
+                table: "EmployeeCertifications",
+                newName: "DateCertified");
 
             migrationBuilder.UpdateData(
                 table: "Employees",
                 keyColumn: "Id",
                 keyValue: 1,
-                columns: new[] { "Created", "TeamId" },
-                values: new object[] { new DateTime(2022, 8, 29, 22, 15, 51, 350, DateTimeKind.Local).AddTicks(7078), 1 });
+                column: "Created",
+                value: new DateTime(2022, 9, 12, 16, 36, 51, 716, DateTimeKind.Local).AddTicks(6139));
 
             migrationBuilder.UpdateData(
                 table: "Employees",
                 keyColumn: "Id",
                 keyValue: 2,
-                columns: new[] { "Created", "TeamId" },
-                values: new object[] { new DateTime(2022, 8, 29, 22, 15, 51, 350, DateTimeKind.Local).AddTicks(7121), 1 });
+                column: "Created",
+                value: new DateTime(2022, 9, 12, 16, 36, 51, 716, DateTimeKind.Local).AddTicks(6167));
 
             migrationBuilder.UpdateData(
                 table: "Employees",
                 keyColumn: "Id",
                 keyValue: 3,
                 column: "Created",
-                value: new DateTime(2022, 8, 29, 22, 15, 51, 350, DateTimeKind.Local).AddTicks(7123));
+                value: new DateTime(2022, 9, 12, 16, 36, 51, 716, DateTimeKind.Local).AddTicks(6170));
 
             migrationBuilder.UpdateData(
                 table: "TeamMembers",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "FromDate",
-                value: new DateTime(2022, 8, 29, 22, 15, 51, 350, DateTimeKind.Local).AddTicks(7139));
+                value: new DateTime(2022, 9, 12, 16, 36, 51, 716, DateTimeKind.Local).AddTicks(6185));
 
             migrationBuilder.UpdateData(
                 table: "TeamMembers",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "FromDate",
-                value: new DateTime(2022, 8, 29, 22, 15, 51, 350, DateTimeKind.Local).AddTicks(7144));
+                value: new DateTime(2022, 9, 12, 16, 36, 51, 716, DateTimeKind.Local).AddTicks(6189));
         }
     }
 }
