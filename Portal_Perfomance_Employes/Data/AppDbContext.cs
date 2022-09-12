@@ -71,12 +71,12 @@ namespace PortalPerfomanceEmployees.Data
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<TeamMember> TeamMembers { get; set; }
-        public DbSet<Certification> Certification { get; set; }
-        public DbSet<EmployeeCertification> EmployeeCertification { get; set; }
-        public DbSet<EmployeeSkill> EmployeeSkill { get; set; }
-        public DbSet<Skill> Skill { get; set; }
-        public DbSet<SkillLevel> SkillLevel { get; set; }
-        public DbSet<SkillLevelType> SkillLevelType { get; set; }
-        public DbSet<SkillType> SkillType { get; set; }
+        public DbSet<Certification> Certifications { get; set; }
+        public DbSet<EmployeeCertification> EmployeeCertifications { get; set; }
+        public DbSet<EmployeeSkill> EmployeeSkills { get; set; }
+        public DbSet<Skill> Skills { get; set; }
+        public DbSet<SkillLevel> SkillLevels { get; set; }
+        public DbSet<SkillLevelType> SkillLevelTypes { get; set; }
+        public DbSet<SkillType> SkillTypes { get; set; }
     }
 }
