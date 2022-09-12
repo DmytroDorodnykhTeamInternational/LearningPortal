@@ -34,7 +34,6 @@ namespace PortalPerfomanceEmployees.Controllers
             }
             else if (emp?.Role == null)
             {
-
                 return StatusCode(403, "Error! Token is corrupt. Role of authorized user was not found");
             }
             else
@@ -84,7 +83,7 @@ namespace PortalPerfomanceEmployees.Controllers
                         // Clearing targetTeam to not get fill "teamMemberships" value in response
                         targetTeam = null;
                         return Ok(target);
-                    } 
+                    }
                     return StatusCode(403, "You do not have permission to view this profile");
                 }
             }
