@@ -8,7 +8,8 @@ import About from "./about";
 import Contact from "./contact";
 import SignUp from "./signUp";
 import SignIn from "./signIn";
-import EmployeesTable from "./employees";
+import EmployeesTable from "./adminComponents/employees";
+import ColleaguesTable from "./userComponents/colleagues";
 
 import IconButton from "@mui/material/IconButton";
 import Container from "@mui/material/Container";
@@ -131,6 +132,7 @@ const NavBar = () => {
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/employees" element={<EmployeesTable />} />
+        <Route path="/colleagues" element={<ColleaguesTable />} />
       </Routes>
     </div>
   );

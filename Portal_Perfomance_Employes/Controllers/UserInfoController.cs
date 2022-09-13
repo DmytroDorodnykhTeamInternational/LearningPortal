@@ -6,6 +6,9 @@ using PortalPerfomanceEmployees.Data;
 using PortalPerfomanceEmployees.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using System.Diagnostics.Metrics;
+using Microsoft.IdentityModel.Tokens;
+using System.ComponentModel.DataAnnotations;
 
 namespace PortalPerfomanceEmployees.Controllers
 {
@@ -99,7 +102,26 @@ namespace PortalPerfomanceEmployees.Controllers
                 .FirstOrDefaultAsync(e => e.EmployeeId == id && e.IsActive);
             if (emp != null)
             {
-                var colleagues = await _context.TeamMembers.Where(c => c.TeamId == emp.TeamId && c.IsActive).ToListAsync();
+                var team = await _context.TeamMembers.Where(t => t.TeamId == emp.TeamId && t.IsActive).ToListAsync();
+
+                List<Employee> colleagues = new List<Employee>();
+                foreach (var colleague in team)
+                {
+                    var employee = await _context.Employees.Where(e => e.Id == colleague.EmployeeId).FirstOrDefaultAsync();
+                    colleagues.Add(
+                        new Employee
+                        {
+                            Id = employee.Id,
+                            Username = employee.Username,
+                            EmailAddress = employee.EmailAddress,
+                            FirstName = employee.FirstName,
+                            LastName = employee.LastName,
+                            DateOfBirth = employee.DateOfBirth,
+                            Seniority = employee.Seniority,
+                            Role = employee.Role,
+                        });
+                    Console.WriteLine(await _context.Employees.Where(e => e.Id == colleague.EmployeeId).FirstOrDefaultAsync());
+                }
                 return colleagues == null ? NotFound("Something went wrong") : Ok(colleagues);
             }
             return NotFound("The team with that ID was not found");
