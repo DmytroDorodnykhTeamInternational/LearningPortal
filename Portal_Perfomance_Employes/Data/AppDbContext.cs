@@ -11,6 +11,50 @@ namespace PortalPerfomanceEmployees.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+             modelBuilder.Entity<EmployeeSkill>()
+                .HasOne(f => f.SkillLevel)
+                .WithMany(s => s.EmployeeSkills)
+                .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<TeamMember>()
+                .HasOne(f => f.Team)
+                .WithMany(s => s.TeamMembers)
+                .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<TeamMember>()
+                .HasOne(f => f.Employee)
+                .WithMany(s => s.TeamMemberships)
+                .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<EmployeeCertification>()
+                .HasOne(f => f.Employee)
+                .WithMany(s => s.EmployeeCertifications)
+                .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<EmployeeCertification>()
+                .HasOne(f => f.Certification)
+                .WithMany(s => s.EmployeeCertifications)
+                .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Certification>()
+                .HasOne(f => f.Skill)
+                .WithOne(s => s.Certification)
+                .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<EmployeeSkill>()
+                .HasOne(f => f.Employee)
+                .WithMany(s => s.EmployeeSkills)
+                .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<SkillType>()
+                .HasMany(f => f.Skills)
+                .WithOne(s => s.SkillType)
+                .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Skill>()
+                .HasMany(f => f.EmployeeSkills)
+                .WithOne(s => s.Skill)
+                .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<EmployeeSkill>()
+                .HasOne(f => f.SkillLevel)
+                .WithMany(s => s.EmployeeSkills)
+                .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<SkillLevel>()
+                .HasOne(f => f.SkillLevelType)
+                .WithMany(s => s.SkillLevels)
+                .OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Team>().HasData(
                 new Team { TeamId = 1, TeamName = "Team number one", DateCreated = new DateTime(2022, 08, 29), TeamLeaderId = 2 },
                 new Team { TeamId = 2, TeamName = "Team number two", DateCreated = new DateTime(2022, 09, 10), TeamLeaderId = 11 }
@@ -190,5 +234,12 @@ namespace PortalPerfomanceEmployees.Data
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<TeamMember> TeamMembers { get; set; }
+        public DbSet<Certification> Certifications { get; set; }
+        public DbSet<EmployeeCertification> EmployeeCertifications { get; set; }
+        public DbSet<EmployeeSkill> EmployeeSkills { get; set; }
+        public DbSet<Skill> Skills { get; set; }
+        public DbSet<SkillLevel> SkillLevels { get; set; }
+        public DbSet<SkillLevelType> SkillLevelTypes { get; set; }
+        public DbSet<SkillType> SkillTypes { get; set; }
     }
 }
