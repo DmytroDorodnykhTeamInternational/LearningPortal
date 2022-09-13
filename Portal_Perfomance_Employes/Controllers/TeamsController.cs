@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PortalPerfomanceEmployees.Data;
@@ -12,6 +12,7 @@ namespace PortalPerfomanceEmployees.Controllers
     public class TeamsController : ControllerBase
     {
         private readonly AppDbContext _context;
+
         public TeamsController(AppDbContext context)
         {
             _context = context;

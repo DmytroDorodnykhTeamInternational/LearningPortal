@@ -8,7 +8,7 @@ namespace PortalPerfomanceEmployees.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class EmployeeController : ControllerBase
     {
         private readonly AppDbContext _context;
@@ -24,16 +24,7 @@ namespace PortalPerfomanceEmployees.Controllers
             return Ok(await _context.Employees.ToListAsync());
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetEmployee(int id)
-        {
-            var emp = await _context.Employees
-                .FirstOrDefaultAsync(e => e.Id == id);
-            return emp == null ? NotFound("Employee with specified ID was not found") : Ok(emp);
-        }
-        
         [HttpPost]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateEmployee(EmployeeDTO employee)
         {
             Employee newEmployee = new Employee();
@@ -51,8 +42,7 @@ namespace PortalPerfomanceEmployees.Controllers
             return Ok(await GetEmployees());
         }
 
-        [HttpPut("{id}")]
-        [Authorize(Roles = "Admin")]
+        [HttpPost("{id}")]
         public async Task<IActionResult> UpdateEmployee(EmployeeDTO employee, int id)
         {
             var EmployeeToUpdate = await _context.Employees
@@ -71,7 +61,6 @@ namespace PortalPerfomanceEmployees.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteEmployee(int id)
         {
             var EmployeeToDelete = await _context.Employees

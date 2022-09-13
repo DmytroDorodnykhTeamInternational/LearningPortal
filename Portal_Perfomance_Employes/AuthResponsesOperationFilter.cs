@@ -19,7 +19,7 @@ public class AuthResponsesOperationFilter : IOperationFilter
                 new OpenApiSecurityScheme {
                     Reference = new OpenApiReference {
                     Type = ReferenceType.SecurityScheme,
-                    Id = "bearer"
+                    Id = "Bearer"
                     }
                  }, new string[] {}
             }}};

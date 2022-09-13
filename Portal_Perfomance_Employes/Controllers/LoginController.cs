@@ -21,6 +21,7 @@ namespace PortalPerfomanceEmployees.Controllers
     {
         private readonly AppDbContext _context;
         private readonly IConfiguration _config;
+        private readonly int tokenLifeSpan = 10;
 
         public LoginController(AppDbContext context, IConfiguration config)
         {
@@ -39,14 +40,6 @@ namespace PortalPerfomanceEmployees.Controllers
                 return Ok(token);
             }
             return NotFound("Username or password not found.");
-        }
-
-        [Route("GetUserRole")]
-        [HttpGet]
-        [Authorize]
-        public IActionResult UserRole()
-        {
-            return Ok(User.FindFirst(ClaimTypes.Role)?.Value);
         }
 
         [Route("RefreshToken")]
@@ -77,7 +70,7 @@ namespace PortalPerfomanceEmployees.Controllers
                         var token = new JwtSecurityToken(_config["Jwt:Issuer"],
                           _config["Jwt:Audience"],
                           claims,
-                          expires: DateTime.Now.AddMinutes(1),
+                          expires: DateTime.Now.AddMinutes(tokenLifeSpan),
                           signingCredentials: credentials);
                         return Ok(new JwtSecurityTokenHandler().WriteToken(token));
                     }
@@ -101,7 +94,7 @@ namespace PortalPerfomanceEmployees.Controllers
             var token = new JwtSecurityToken(_config["Jwt:Issuer"],
               _config["Jwt:Audience"],
               claims,
-              expires: DateTime.Now.AddMinutes(1),
+              expires: DateTime.Now.AddMinutes(tokenLifeSpan),
               signingCredentials: credentials);
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
