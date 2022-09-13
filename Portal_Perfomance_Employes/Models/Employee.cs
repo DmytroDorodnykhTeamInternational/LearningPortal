@@ -21,5 +21,7 @@ namespace PortalPerfomanceEmployees.Models
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         public DateTime Created { get; set; }
         public ICollection<TeamMember> TeamMemberships { get; set; } = new List<TeamMember>();
+        public ICollection<EmployeeCertification> EmployeeCertifications { get; set; }
+        public ICollection<EmployeeSkill> EmployeeSkills { get; set; }
     }
 }

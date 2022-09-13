@@ -10,4 +10,5 @@ public class Team
     public DateTime DateCreated { get; set; }
     public string TeamName { get; set; }
     public Nullable<int> TeamLeaderId { get; set; }
+    public ICollection<TeamMember> TeamMembers { get; set; }
 }

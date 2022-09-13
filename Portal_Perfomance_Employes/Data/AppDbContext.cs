@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using PortalPerfomanceEmployees.Models;
 
 namespace PortalPerfomanceEmployees.Data
@@ -11,7 +11,7 @@ namespace PortalPerfomanceEmployees.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-             modelBuilder.Entity<EmployeeSkill>()
+            modelBuilder.Entity<EmployeeSkill>()
                 .HasOne(f => f.SkillLevel)
                 .WithMany(s => s.EmployeeSkills)
                 .OnDelete(DeleteBehavior.NoAction);
