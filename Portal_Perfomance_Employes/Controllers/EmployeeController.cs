@@ -19,6 +19,7 @@ namespace PortalPerfomanceEmployees.Controllers
         }
 
         [HttpGet]
+		[Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetEmployees()
         {
             return Ok(await _context.Employees.ToListAsync());

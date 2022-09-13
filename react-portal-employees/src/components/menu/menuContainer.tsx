@@ -66,10 +66,8 @@ function MenuContainer() {
   });
 
   const isAuth = useAppSelector((state) => state.isAuth.value);
-  const role = useAppSelector((state) => state.role.value);
+  const role = useAppSelector((state) => state.role.value!);
 
-  console.log(isAuth);
-  console.log(role);
   return isAuth ? (
     role === "Admin" ? (
       <Box
