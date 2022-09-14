@@ -104,7 +104,7 @@ namespace PortalPerfomanceEmployees.Controllers
             {
                 var team = await _context.TeamMembers.Where(t => t.TeamId == emp.TeamId && t.IsActive).ToListAsync();
 
-                List<Employee> colleagues = new List<Employee>();
+                var colleagues = new List<Employee>();
                 foreach (var colleague in team)
                 {
                     var employee = await _context.Employees.Where(e => e.Id == colleague.EmployeeId).FirstOrDefaultAsync();
@@ -120,7 +120,6 @@ namespace PortalPerfomanceEmployees.Controllers
                             Seniority = employee.Seniority,
                             Role = employee.Role,
                         });
-                    Console.WriteLine(await _context.Employees.Where(e => e.Id == colleague.EmployeeId).FirstOrDefaultAsync());
                 }
                 return colleagues == null ? NotFound("Something went wrong") : Ok(colleagues);
             }
