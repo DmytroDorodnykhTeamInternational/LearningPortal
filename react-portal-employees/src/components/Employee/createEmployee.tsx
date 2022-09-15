@@ -33,10 +33,21 @@ export default function CreateEmployee() {
       FirstName: '',
       LastName: '',
       DateOfBirth: ''
-    })   
+    });
+    const enumSeniority = {
+      junior: 0,
+      midLivel: 1,
+      senior: 2
+    } as const;
+    const enumRole = {
+      employee: 0,
+      teamLead: 1,
+      admin: 2
+    } as const;
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
+      console.log("tese");
       let MsgEr = "";
       Object.entries(error).forEach(
         ([key, value]) => {
@@ -47,19 +58,13 @@ export default function CreateEmployee() {
         alert(MsgEr);
         return
       } 
+      console.log(JSON.stringify(input));
       ApiEmployee.CreateEmployee(JSON.stringify(input));
     };
 
     const checkValidation = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => {
       const { name, value } = e.target;
-      if (name == "Seniority" || name == "Role")
-      {
-        setInput(prev => ({
-          ...prev,
-          [name]: Number(value)
-        }));
-      }
-      else if (name == "confirmPassword") { setConfirmPwd(value); }
+      if (name == "confirmPassword") { setConfirmPwd(value); }
       else{
         setInput(prev => ({
           ...prev,
@@ -192,16 +197,16 @@ export default function CreateEmployee() {
               <InputLabel htmlFor="Seniority">Seniority</InputLabel>
               <NativeSelect id="Seniority" name="Seniority" fullWidth required autoFocus onChange={e => checkValidation(e)}>
                 <option value=""></option>
-                <option value="0">Junior</option>
-                <option value="1">Mid Level</option>
-                <option value="2">Senior</option>
+                <option value={enumSeniority.junior}>Junior</option>
+                <option value={enumSeniority.midLivel}>Mid Level</option>
+                <option value={enumSeniority.senior}>Senior</option>
               </NativeSelect>
               <InputLabel htmlFor="Role">Role</InputLabel>
               <NativeSelect id="Role" name="Role" fullWidth required autoFocus onChange={e => checkValidation(e)}>
                 <option value=""></option>
-                <option value="0">Employee</option>
-                <option value="1">Team lead</option>
-                <option value="2">Admin</option>
+                <option value={enumRole.employee}>Employee</option>
+                <option value={enumRole.teamLead}>Team lead</option>
+                <option value={enumRole.admin}>Admin</option>
               </NativeSelect>
               <TextField
                 margin="normal"
