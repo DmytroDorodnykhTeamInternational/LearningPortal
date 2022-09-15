@@ -230,6 +230,26 @@ namespace PortalPerfomanceEmployees.Data
                 new TeamMember { Id = 10, EmployeeId = 11, TeamId = 2, FirstName = "Emp11", LastName = "Test11", FromDate = DateTime.Now, IsActive = true },
                 new TeamMember { Id = 11, EmployeeId = 4, TeamId = 2, FirstName = "Emp4", LastName = "Test4", FromDate = DateTime.Now, IsActive = true }
                 );
+            modelBuilder.Entity<EmployeeSkill>().HasData(
+                new EmployeeSkill { Id = 1, EmployeeId = 1, SkillId = 1, SkillLevelId = 1 },
+                new EmployeeSkill { Id = 2, EmployeeId = 1, SkillId = 2, SkillLevelId = 2 }
+                );
+            modelBuilder.Entity<SkillLevel>().HasData(
+                new SkillLevel { SkillLevelId = 1, SkillLevelTypeId = 1, SkillLevelName = "B1" },
+                new SkillLevel { SkillLevelId = 2, SkillLevelTypeId = 2, SkillLevelName = "Advanced" }
+                );
+            modelBuilder.Entity<SkillLevelType>().HasData(
+                new SkillLevelType { SkillLevelTypeId = 1, SkillLevelTypeName = "Language" },
+                new SkillLevelType { SkillLevelTypeId = 2, SkillLevelTypeName = "Technology" }
+                );
+            modelBuilder.Entity<Skill>().HasData(
+                new Skill { SkillId = 1, SkillLevelTypeId = 1, SkillTypeId = 1, SkillName = "Spoken English" },
+                new Skill { SkillId = 2, SkillLevelTypeId = 2, SkillTypeId = 2, SkillName = "C# Programming" }
+                );
+            modelBuilder.Entity<SkillType>().HasData(
+                new SkillType { SkillTypeId = 1, SkillTypeName = "Soft skill" },
+                new SkillType { SkillTypeId = 2, SkillTypeName = "Hard skill" }
+                );
         }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Team> Teams { get; set; }
