@@ -60,9 +60,9 @@ function MenuUser() {
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
       >
-        <MenuItem key="Item1" onClick={handleCloseUserMenu}>
-          <Link to="#" style={{ color: "#000" }}>
-            Item 1
+        <MenuItem key="Colleagues" onClick={handleCloseUserMenu}>
+          <Link to="/colleagues" style={{ color: "#000" }}>
+            Colleagues
           </Link>
         </MenuItem>
         <MenuItem key="Item2" onClick={handleCloseUserMenu}>

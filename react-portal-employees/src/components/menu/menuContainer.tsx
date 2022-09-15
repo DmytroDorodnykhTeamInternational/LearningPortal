@@ -15,7 +15,8 @@ import { isValid, isInvalid } from "../../redux/slice/authSlice";
 import { visitor, user, admin } from "../../redux/slice/roleSlice";
 import { useAppDispatch } from "../../redux/hooks";
 
-import { RefreshToken, GetRole } from "../../services/api/ApiRequests";
+import { RefreshToken } from "../../services/api/Requests/LoginControllersRequests";
+import { GetRole } from "../../services/api/Requests/UserInfoControllerRequests";
 import { useJwt } from "react-jwt";
 import Cookies from "js-cookie";
 

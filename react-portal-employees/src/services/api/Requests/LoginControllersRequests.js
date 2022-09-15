@@ -1,4 +1,4 @@
-import API from "./ApiConfig";
+import API from "../ApiConfig";
 import Cookies from "js-cookie";
 
 export async function AuthRequest(data) {
@@ -34,34 +34,4 @@ export async function RefreshToken() {
     return true;
   }
   return false;
-}
-
-export async function GetRole() {
-  let response = await API.get("/Login/GetUserRole", {
-    headers: {
-      Authorization: `Bearer ${Cookies.get("user_session")}`,
-    },
-  }).catch((error) => {
-    return "";
-  });
-
-  if (response.status === 200) {
-    return response.data;
-  }
-  return "";
-}
-
-export async function GetEmployees() {
-  let response = await API.get("/Employee", {
-    headers: {
-      Authorization: `Bearer ${Cookies.get("user_session")}`,
-    },
-  }).catch((error) => {
-    return [];
-  });
-
-  if (response.status === 200) {
-    return response.data;
-  }
-  return [];
 }
