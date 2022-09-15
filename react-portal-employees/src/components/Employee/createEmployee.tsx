@@ -47,7 +47,6 @@ export default function CreateEmployee() {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
-      console.log("tese");
       let MsgEr = "";
       Object.entries(error).forEach(
         ([key, value]) => {
@@ -58,7 +57,6 @@ export default function CreateEmployee() {
         alert(MsgEr);
         return
       } 
-      console.log(JSON.stringify(input));
       ApiEmployee.CreateEmployee(JSON.stringify(input));
     };
 

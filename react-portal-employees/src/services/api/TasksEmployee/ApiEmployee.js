@@ -5,7 +5,7 @@ class apiEmployee{
     CreateEmployee = async (Employee) => {
         return new Promise((resolve, reject) => {
             Api.post('./Employee', Employee)
-            .then((response) => {console.log(response.data)})
+            .then((response) => response.data)
             .catch((error) => { reject(error);});
         });
     }
