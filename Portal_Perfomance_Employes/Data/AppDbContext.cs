@@ -31,10 +31,6 @@ namespace PortalPerfomanceEmployees.Data
                 .HasOne(f => f.Certification)
                 .WithMany(s => s.EmployeeCertifications)
                 .OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<Certification>()
-                .HasOne(f => f.Skill)
-                .WithOne(s => s.Certification)
-                .OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<EmployeeSkill>()
                 .HasOne(f => f.Employee)
                 .WithMany(s => s.EmployeeSkills)
@@ -230,6 +226,42 @@ namespace PortalPerfomanceEmployees.Data
                 new TeamMember { Id = 10, EmployeeId = 11, TeamId = 2, FirstName = "Emp11", LastName = "Test11", FromDate = DateTime.Now, IsActive = true },
                 new TeamMember { Id = 11, EmployeeId = 4, TeamId = 2, FirstName = "Emp4", LastName = "Test4", FromDate = DateTime.Now, IsActive = true }
                 );
+            modelBuilder.Entity<SkillLevelType>().HasData(
+                new SkillLevelType { SkillLevelTypeId = 1, SkillLevelTypeName = "Language" },
+                new SkillLevelType { SkillLevelTypeId = 2, SkillLevelTypeName = "Technology" }
+                );
+            modelBuilder.Entity<SkillType>().HasData(
+                new SkillType { SkillTypeId = 1, SkillTypeName = "Hard Skill" },
+                new SkillType { SkillTypeId = 2, SkillTypeName = "Soft Skill" }
+                );
+            modelBuilder.Entity<SkillLevel>().HasData(
+                new SkillLevel { SkillLevelId = 1, SkillLevelTypeId = 1, SkillLevelName = "A1" },
+                new SkillLevel { SkillLevelId = 2, SkillLevelTypeId = 1, SkillLevelName = "A2" },
+                new SkillLevel { SkillLevelId = 3, SkillLevelTypeId = 1, SkillLevelName = "B1" },
+                new SkillLevel { SkillLevelId = 4, SkillLevelTypeId = 1, SkillLevelName = "B2" },
+                new SkillLevel { SkillLevelId = 5, SkillLevelTypeId = 1, SkillLevelName = "C1" },
+                new SkillLevel { SkillLevelId = 6, SkillLevelTypeId = 1, SkillLevelName = "C2" },
+                new SkillLevel { SkillLevelId = 7, SkillLevelTypeId = 2, SkillLevelName = "Novice" },
+                new SkillLevel { SkillLevelId = 8, SkillLevelTypeId = 2, SkillLevelName = "Beginner" },
+                new SkillLevel { SkillLevelId = 9, SkillLevelTypeId = 2, SkillLevelName = "Competent" },
+                new SkillLevel { SkillLevelId = 10, SkillLevelTypeId = 2, SkillLevelName = "Proficient" },
+                new SkillLevel { SkillLevelId = 11, SkillLevelTypeId = 2, SkillLevelName = "Expert" }
+                );
+            modelBuilder.Entity<Skill>().HasData(
+                new Skill { SkillId = 1, SkillLevelTypeId = 2, SkillName = "English proficiency", SkillTypeId = 2 },
+                new Skill { SkillId = 2, SkillLevelTypeId = 1, SkillName = "Microsoft Azure architecture", SkillTypeId = 1 },
+                new Skill { SkillId = 3, SkillLevelTypeId = 1, SkillName = "C#/.NET programming", SkillTypeId = 1 }
+                );
+            modelBuilder.Entity<CertificationSkill>().HasData(
+                new CertificationSkill { CertificationSkillId = 1, CertificationId = 1, SkillId = 2 },
+                new CertificationSkill { CertificationSkillId = 2, CertificationId = 2, SkillId = 3 },
+                new CertificationSkill { CertificationSkillId = 3, CertificationId = 3, SkillId = 1 }
+                );
+            modelBuilder.Entity<Certification>().HasData(
+                new Certification { CertificationId = 1, CertificationName = "AZ-301 Microsoft Azure Architect Design", CertificationSkillId = 1 },
+                new Certification { CertificationId = 2, CertificationName = "70-483: Programming in C#", CertificationSkillId = 2 },
+                new Certification { CertificationId = 3, CertificationName = "Cambridge English: Advanced", CertificationSkillId = 3 }
+                );
         }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Team> Teams { get; set; }
@@ -241,5 +273,6 @@ namespace PortalPerfomanceEmployees.Data
         public DbSet<SkillLevel> SkillLevels { get; set; }
         public DbSet<SkillLevelType> SkillLevelTypes { get; set; }
         public DbSet<SkillType> SkillTypes { get; set; }
+        public DbSet<CertificationSkill> CertificationSkills { get; set; }
     }
 }

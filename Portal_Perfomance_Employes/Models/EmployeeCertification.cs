@@ -15,7 +15,7 @@ namespace PortalPerfomanceEmployees.Models
         public Employee Employee { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
-        public DateTime DateCertificate { get; set; }
-        public string CertifcateUrl { get; set; }
+        public DateTime DateCertified { get; set; }
+        public string CertificateUrl { get; set; }
     }
 }
