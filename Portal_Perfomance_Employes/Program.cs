@@ -63,7 +63,14 @@ builder.Services.AddSwaggerGen(setup =>
     setup.OperationFilter<AuthResponsesOperationFilter>();
 });
 builder.Configuration.AddUserSecrets<Program>(true);
-builder.Services.AddDbContext<PortalPerfomanceEmployees.Data.AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("EmployeeDbString")));
+builder.Services.AddDbContext<PortalPerfomanceEmployees.Data.AppDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("EmployeeDbString"),
+        sqlServerOptionsAction: sqlOptions =>
+        {
+            sqlOptions.EnableRetryOnFailure();
+        });
+});
 
 
 var app = builder.Build();

@@ -49,91 +49,88 @@ namespace PortalPerfomanceEmployees.Controllers
         [HttpGet]
         public async Task<IActionResult> GetUserSoftSkills()
         {
-            int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int id);
-            var empSkills = await _context.EmployeeSkills.Where(e => e.EmployeeId == id).ToListAsync();
-            if (empSkills != null)
+            if (int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int id))
             {
-                var hardSkillsTable = new DataTable();
-                hardSkillsTable.Columns.Add("SkillName", typeof(string));
-                hardSkillsTable.Columns.Add("SkillLevel", typeof(string));
-
-                foreach (var empSkill in empSkills)
+                var empSkills = await _context.EmployeeSkills.Where(e => e.EmployeeId == id).ToListAsync();
+                if (empSkills != null)
                 {
-                    var skill = await _context.Skills.FirstOrDefaultAsync(s => s.SkillId == empSkill.SkillId);
-                    var skillType = await _context.SkillTypes.FirstOrDefaultAsync(st => st.SkillTypeId == skill.SkillTypeId);
-                    var skillLevel = await _context.SkillLevels.FirstOrDefaultAsync(sl => sl.SkillLevelId == empSkill.SkillLevelId);
-
-                    if (skillType.SkillTypeName == "Soft skill")
-                    {
-                        hardSkillsTable.Rows.Add(
-                            skill.SkillName,
-                            skillLevel.SkillLevelName
-                        );
-                    }
+                    var result = BuildSkillsTable(empSkills, "Soft Skill").Result;
+                    return Ok(result);
                 }
-                return Ok(hardSkillsTable.ToJson());
+                return NotFound("The user skills list is empty");
             }
-            return NotFound("The user skills list is empty");
+            return StatusCode(403, "Error! Token is corrupt. ID of authorized user was not found");
         }
 
         [Route("GetUserHardSkills")]
         [HttpGet]
         public async Task<IActionResult> GetUserHardSkills()
         {
-            int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int id);
-            var empSkills = await _context.EmployeeSkills.Where(e => e.EmployeeId == id).ToListAsync();
-            if (empSkills != null)
+            if (int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int id))
             {
-                var hardSkillsTable = new DataTable();
-                hardSkillsTable.Columns.Add("SkillName", typeof(string));
-                hardSkillsTable.Columns.Add("SkillLevel", typeof(string));
-
-                foreach (var empSkill in empSkills)
+                var empSkills = await _context.EmployeeSkills.Where(e => e.EmployeeId == id).ToListAsync();
+                if (empSkills != null)
                 {
-                    var skill = await _context.Skills.FirstOrDefaultAsync(s => s.SkillId == empSkill.SkillId);
-                    var skillType = await _context.SkillTypes.FirstOrDefaultAsync(st => st.SkillTypeId == skill.SkillTypeId);
-                    var skillLevel = await _context.SkillLevels.FirstOrDefaultAsync(sl => sl.SkillLevelId == empSkill.SkillLevelId);
-
-                    if (skillType.SkillTypeName == "Hard skill")
-                    {
-                        hardSkillsTable.Rows.Add(
-                            skill.SkillName,
-                            skillLevel.SkillLevelName
-                        );
-                    }
+                    var result = BuildSkillsTable(empSkills, "Hard Skill").Result;
+                    return Ok(result);
                 }
-                return Ok(hardSkillsTable.ToJson());
+                return NotFound("The user skills list is empty");
             }
-            return NotFound("The user skills list is empty");
+            return StatusCode(403, "Error! Token is corrupt. ID of authorized user was not found");
         }
 
         [Route("AddUserSkill")]
         [HttpPut]
         public async Task<IActionResult> AddUserSkill(int skillType, string skillName, int skillLevelId, int skillLevelTypeId)
         {
-            int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int id);
-            var emp = await _context.Employees.FirstOrDefaultAsync(e => e.Id == id);
-            if (emp != null)
+            if (int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int id))
             {
-                Skill newSkill = new Skill();
-                newSkill.SkillLevelTypeId = skillLevelTypeId;
-                newSkill.SkillTypeId = skillType;
-                newSkill.SkillName = skillName;
-                _context.Skills.Add(newSkill);
-                await _context.SaveChangesAsync();
+                var emp = await _context.Employees.FirstOrDefaultAsync(e => e.Id == id);
+                if (emp != null)
+                {
+                    Skill newSkill = new Skill();
+                    newSkill.SkillLevelTypeId = skillLevelTypeId;
+                    newSkill.SkillTypeId = skillType;
+                    newSkill.SkillName = skillName;
+                    _context.Skills.Add(newSkill);
+                    await _context.SaveChangesAsync();
 
-                var newSkillId = _context.Skills.OrderByDescending(skill => skill.SkillId).FirstOrDefault().SkillId;
+                    var newSkillId = _context.Skills.OrderByDescending(skill => skill.SkillId).FirstOrDefault().SkillId;
 
-                EmployeeSkill newEmployeeSkill = new EmployeeSkill();
-                newEmployeeSkill.EmployeeId = emp.Id;
-                newEmployeeSkill.SkillId = newSkillId;
-                newEmployeeSkill.SkillLevelId = skillLevelId;
-                _context.EmployeeSkills.Add(newEmployeeSkill);
-                await _context.SaveChangesAsync();
+                    EmployeeSkill newEmployeeSkill = new EmployeeSkill();
+                    newEmployeeSkill.EmployeeId = emp.Id;
+                    newEmployeeSkill.SkillId = newSkillId;
+                    newEmployeeSkill.SkillLevelId = skillLevelId;
+                    _context.EmployeeSkills.Add(newEmployeeSkill);
+                    await _context.SaveChangesAsync();
 
-                return Ok("Tables have been successfully updated");
+                    return Ok("Tables have been successfully updated");
+                }
             }
             return StatusCode(403, "Error! Token is corrupt. ID of authorized user was not found");
+        }
+
+        private async Task<string> BuildSkillsTable(List<EmployeeSkill> empSkills, string skillTypeName)
+        {
+            var hardSkillsTable = new DataTable();
+            hardSkillsTable.Columns.Add("SkillName", typeof(string));
+            hardSkillsTable.Columns.Add("SkillLevel", typeof(string));
+
+            foreach (var empSkill in empSkills)
+            {
+                var skill = await _context.Skills.FirstOrDefaultAsync(s => s.SkillId == empSkill.SkillId);
+                var skillType = await _context.SkillTypes.FirstOrDefaultAsync(st => st.SkillTypeId == skill.SkillTypeId);
+                var skillLevel = await _context.SkillLevels.FirstOrDefaultAsync(sl => sl.SkillLevelId == empSkill.SkillLevelId);
+
+                if (skillType.SkillTypeName == skillTypeName)
+                {
+                    hardSkillsTable.Rows.Add(
+                        skill.SkillName,
+                        skillLevel.SkillLevelName
+                    );
+                }
+            }
+            return hardSkillsTable.ToJson();
         }
     }
 }

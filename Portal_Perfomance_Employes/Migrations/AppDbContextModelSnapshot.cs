@@ -93,7 +93,7 @@ namespace PortalPerfomanceEmployees.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2022, 9, 13, 15, 50, 31, 653, DateTimeKind.Local).AddTicks(7095),
+                            Created = new DateTime(2022, 9, 16, 18, 46, 58, 316, DateTimeKind.Local).AddTicks(2213),
                             DateOfBirth = new DateTime(2000, 5, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailAddress = "emp@email.com",
                             FirstName = "Emp1",
@@ -106,7 +106,7 @@ namespace PortalPerfomanceEmployees.Migrations
                         new
                         {
                             Id = 2,
-                            Created = new DateTime(2022, 9, 13, 15, 50, 31, 653, DateTimeKind.Local).AddTicks(7133),
+                            Created = new DateTime(2022, 9, 16, 18, 46, 58, 316, DateTimeKind.Local).AddTicks(2251),
                             DateOfBirth = new DateTime(1980, 3, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailAddress = "teamlead@email.com",
                             FirstName = "Emp2",
@@ -119,7 +119,7 @@ namespace PortalPerfomanceEmployees.Migrations
                         new
                         {
                             Id = 3,
-                            Created = new DateTime(2022, 9, 13, 15, 50, 31, 653, DateTimeKind.Local).AddTicks(7136),
+                            Created = new DateTime(2022, 9, 16, 18, 46, 58, 316, DateTimeKind.Local).AddTicks(2254),
                             DateOfBirth = new DateTime(2005, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailAddress = "admin@email.com",
                             FirstName = "Emp3",
@@ -132,7 +132,7 @@ namespace PortalPerfomanceEmployees.Migrations
                         new
                         {
                             Id = 4,
-                            Created = new DateTime(2022, 9, 13, 15, 50, 31, 653, DateTimeKind.Local).AddTicks(7138),
+                            Created = new DateTime(2022, 9, 16, 18, 46, 58, 316, DateTimeKind.Local).AddTicks(2256),
                             DateOfBirth = new DateTime(1987, 3, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailAddress = "emp2@email.com",
                             FirstName = "Emp4",
@@ -145,7 +145,7 @@ namespace PortalPerfomanceEmployees.Migrations
                         new
                         {
                             Id = 5,
-                            Created = new DateTime(2022, 9, 13, 15, 50, 31, 653, DateTimeKind.Local).AddTicks(7280),
+                            Created = new DateTime(2022, 9, 16, 18, 46, 58, 316, DateTimeKind.Local).AddTicks(2259),
                             DateOfBirth = new DateTime(1988, 7, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailAddress = "emp3@email.com",
                             FirstName = "Emp5",
@@ -158,7 +158,7 @@ namespace PortalPerfomanceEmployees.Migrations
                         new
                         {
                             Id = 6,
-                            Created = new DateTime(2022, 9, 13, 15, 50, 31, 653, DateTimeKind.Local).AddTicks(7283),
+                            Created = new DateTime(2022, 9, 16, 18, 46, 58, 316, DateTimeKind.Local).AddTicks(2261),
                             DateOfBirth = new DateTime(2001, 10, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailAddress = "emp4@email.com",
                             FirstName = "Emp6",
@@ -171,7 +171,7 @@ namespace PortalPerfomanceEmployees.Migrations
                         new
                         {
                             Id = 7,
-                            Created = new DateTime(2022, 9, 13, 15, 50, 31, 653, DateTimeKind.Local).AddTicks(7285),
+                            Created = new DateTime(2022, 9, 16, 18, 46, 58, 316, DateTimeKind.Local).AddTicks(2264),
                             DateOfBirth = new DateTime(2003, 5, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailAddress = "emp5@email.com",
                             FirstName = "Emp7",
@@ -184,7 +184,7 @@ namespace PortalPerfomanceEmployees.Migrations
                         new
                         {
                             Id = 8,
-                            Created = new DateTime(2022, 9, 13, 15, 50, 31, 653, DateTimeKind.Local).AddTicks(7287),
+                            Created = new DateTime(2022, 9, 16, 18, 46, 58, 316, DateTimeKind.Local).AddTicks(2266),
                             DateOfBirth = new DateTime(1980, 3, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailAddress = "emp6@email.com",
                             FirstName = "Emp8",
@@ -197,7 +197,7 @@ namespace PortalPerfomanceEmployees.Migrations
                         new
                         {
                             Id = 9,
-                            Created = new DateTime(2022, 9, 13, 15, 50, 31, 653, DateTimeKind.Local).AddTicks(7290),
+                            Created = new DateTime(2022, 9, 16, 18, 46, 58, 316, DateTimeKind.Local).AddTicks(2269),
                             DateOfBirth = new DateTime(2005, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailAddress = "emp7@email.com",
                             FirstName = "Emp9",
@@ -210,7 +210,7 @@ namespace PortalPerfomanceEmployees.Migrations
                         new
                         {
                             Id = 10,
-                            Created = new DateTime(2022, 9, 13, 15, 50, 31, 653, DateTimeKind.Local).AddTicks(7293),
+                            Created = new DateTime(2022, 9, 16, 18, 46, 58, 316, DateTimeKind.Local).AddTicks(2272),
                             DateOfBirth = new DateTime(2000, 5, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailAddress = "emp8@email.com",
                             FirstName = "Emp10",
@@ -223,7 +223,7 @@ namespace PortalPerfomanceEmployees.Migrations
                         new
                         {
                             Id = 11,
-                            Created = new DateTime(2022, 9, 13, 15, 50, 31, 653, DateTimeKind.Local).AddTicks(7295),
+                            Created = new DateTime(2022, 9, 16, 18, 46, 58, 316, DateTimeKind.Local).AddTicks(2274),
                             DateOfBirth = new DateTime(1980, 3, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailAddress = "teamlead2@email.com",
                             FirstName = "Emp11",
@@ -236,7 +236,7 @@ namespace PortalPerfomanceEmployees.Migrations
                         new
                         {
                             Id = 12,
-                            Created = new DateTime(2022, 9, 13, 15, 50, 31, 653, DateTimeKind.Local).AddTicks(7298),
+                            Created = new DateTime(2022, 9, 16, 18, 46, 58, 316, DateTimeKind.Local).AddTicks(2277),
                             DateOfBirth = new DateTime(2005, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailAddress = "admin2@email.com",
                             FirstName = "Emp12",
@@ -304,6 +304,22 @@ namespace PortalPerfomanceEmployees.Migrations
                     b.HasIndex("SkillLevelId");
 
                     b.ToTable("EmployeeSkills");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            EmployeeId = 1,
+                            SkillId = 1,
+                            SkillLevelId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            EmployeeId = 1,
+                            SkillId = 2,
+                            SkillLevelId = 7
+                        });
                 });
 
             modelBuilder.Entity("PortalPerfomanceEmployees.Models.Skill", b =>
@@ -331,6 +347,29 @@ namespace PortalPerfomanceEmployees.Migrations
                     b.HasIndex("SkillTypeId");
 
                     b.ToTable("Skills");
+
+                    b.HasData(
+                        new
+                        {
+                            SkillId = 1,
+                            SkillLevelTypeId = 1,
+                            SkillName = "English proficiency",
+                            SkillTypeId = 1
+                        },
+                        new
+                        {
+                            SkillId = 2,
+                            SkillLevelTypeId = 2,
+                            SkillName = "Microsoft Azure architecture",
+                            SkillTypeId = 2
+                        },
+                        new
+                        {
+                            SkillId = 3,
+                            SkillLevelTypeId = 2,
+                            SkillName = "C#/.NET programming",
+                            SkillTypeId = 2
+                        });
                 });
 
             modelBuilder.Entity("PortalPerfomanceEmployees.Models.SkillLevel", b =>
@@ -353,6 +392,74 @@ namespace PortalPerfomanceEmployees.Migrations
                     b.HasIndex("SkillLevelTypeId");
 
                     b.ToTable("SkillLevels");
+
+                    b.HasData(
+                        new
+                        {
+                            SkillLevelId = 1,
+                            SkillLevelName = "A1",
+                            SkillLevelTypeId = 1
+                        },
+                        new
+                        {
+                            SkillLevelId = 2,
+                            SkillLevelName = "A2",
+                            SkillLevelTypeId = 1
+                        },
+                        new
+                        {
+                            SkillLevelId = 3,
+                            SkillLevelName = "B1",
+                            SkillLevelTypeId = 1
+                        },
+                        new
+                        {
+                            SkillLevelId = 4,
+                            SkillLevelName = "B2",
+                            SkillLevelTypeId = 1
+                        },
+                        new
+                        {
+                            SkillLevelId = 5,
+                            SkillLevelName = "C1",
+                            SkillLevelTypeId = 1
+                        },
+                        new
+                        {
+                            SkillLevelId = 6,
+                            SkillLevelName = "C2",
+                            SkillLevelTypeId = 1
+                        },
+                        new
+                        {
+                            SkillLevelId = 7,
+                            SkillLevelName = "Novice",
+                            SkillLevelTypeId = 2
+                        },
+                        new
+                        {
+                            SkillLevelId = 8,
+                            SkillLevelName = "Beginner",
+                            SkillLevelTypeId = 2
+                        },
+                        new
+                        {
+                            SkillLevelId = 9,
+                            SkillLevelName = "Competent",
+                            SkillLevelTypeId = 2
+                        },
+                        new
+                        {
+                            SkillLevelId = 10,
+                            SkillLevelName = "Proficient",
+                            SkillLevelTypeId = 2
+                        },
+                        new
+                        {
+                            SkillLevelId = 11,
+                            SkillLevelName = "Expert",
+                            SkillLevelTypeId = 2
+                        });
                 });
 
             modelBuilder.Entity("PortalPerfomanceEmployees.Models.SkillLevelType", b =>
@@ -370,6 +477,18 @@ namespace PortalPerfomanceEmployees.Migrations
                     b.HasKey("SkillLevelTypeId");
 
                     b.ToTable("SkillLevelTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            SkillLevelTypeId = 1,
+                            SkillLevelTypeName = "Language"
+                        },
+                        new
+                        {
+                            SkillLevelTypeId = 2,
+                            SkillLevelTypeName = "Technology"
+                        });
                 });
 
             modelBuilder.Entity("PortalPerfomanceEmployees.Models.SkillType", b =>
@@ -387,6 +506,18 @@ namespace PortalPerfomanceEmployees.Migrations
                     b.HasKey("SkillTypeId");
 
                     b.ToTable("SkillTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            SkillTypeId = 1,
+                            SkillTypeName = "Hard Skill"
+                        },
+                        new
+                        {
+                            SkillTypeId = 2,
+                            SkillTypeName = "Soft Skill"
+                        });
                 });
 
             modelBuilder.Entity("PortalPerfomanceEmployees.Models.Team", b =>
@@ -473,7 +604,7 @@ namespace PortalPerfomanceEmployees.Migrations
                             Id = 1,
                             EmployeeId = 1,
                             FirstName = "Emp1",
-                            FromDate = new DateTime(2022, 9, 13, 15, 50, 31, 653, DateTimeKind.Local).AddTicks(7360),
+                            FromDate = new DateTime(2022, 9, 16, 18, 46, 58, 316, DateTimeKind.Local).AddTicks(2297),
                             IsActive = true,
                             LastName = "Test1",
                             TeamId = 1
@@ -483,7 +614,7 @@ namespace PortalPerfomanceEmployees.Migrations
                             Id = 2,
                             EmployeeId = 2,
                             FirstName = "Emp2",
-                            FromDate = new DateTime(2022, 9, 13, 15, 50, 31, 653, DateTimeKind.Local).AddTicks(7365),
+                            FromDate = new DateTime(2022, 9, 16, 18, 46, 58, 316, DateTimeKind.Local).AddTicks(2301),
                             IsActive = true,
                             LastName = "Test2",
                             TeamId = 1
@@ -497,14 +628,14 @@ namespace PortalPerfomanceEmployees.Migrations
                             IsActive = false,
                             LastName = "Test11",
                             TeamId = 1,
-                            ToDate = new DateTime(2022, 9, 13, 15, 50, 31, 653, DateTimeKind.Local).AddTicks(7368)
+                            ToDate = new DateTime(2022, 9, 16, 18, 46, 58, 316, DateTimeKind.Local).AddTicks(2304)
                         },
                         new
                         {
                             Id = 4,
                             EmployeeId = 5,
                             FirstName = "Emp5",
-                            FromDate = new DateTime(2022, 9, 13, 15, 50, 31, 653, DateTimeKind.Local).AddTicks(7370),
+                            FromDate = new DateTime(2022, 9, 16, 18, 46, 58, 316, DateTimeKind.Local).AddTicks(2306),
                             IsActive = true,
                             LastName = "Test5",
                             TeamId = 1
@@ -514,7 +645,7 @@ namespace PortalPerfomanceEmployees.Migrations
                             Id = 5,
                             EmployeeId = 6,
                             FirstName = "Emp6",
-                            FromDate = new DateTime(2022, 9, 13, 15, 50, 31, 653, DateTimeKind.Local).AddTicks(7372),
+                            FromDate = new DateTime(2022, 9, 16, 18, 46, 58, 316, DateTimeKind.Local).AddTicks(2308),
                             IsActive = true,
                             LastName = "Test6",
                             TeamId = 1
@@ -524,7 +655,7 @@ namespace PortalPerfomanceEmployees.Migrations
                             Id = 6,
                             EmployeeId = 7,
                             FirstName = "Emp7",
-                            FromDate = new DateTime(2022, 9, 13, 15, 50, 31, 653, DateTimeKind.Local).AddTicks(7374),
+                            FromDate = new DateTime(2022, 9, 16, 18, 46, 58, 316, DateTimeKind.Local).AddTicks(2310),
                             IsActive = true,
                             LastName = "Test7",
                             TeamId = 2
@@ -534,7 +665,7 @@ namespace PortalPerfomanceEmployees.Migrations
                             Id = 7,
                             EmployeeId = 8,
                             FirstName = "Emp8",
-                            FromDate = new DateTime(2022, 9, 13, 15, 50, 31, 653, DateTimeKind.Local).AddTicks(7376),
+                            FromDate = new DateTime(2022, 9, 16, 18, 46, 58, 316, DateTimeKind.Local).AddTicks(2312),
                             IsActive = true,
                             LastName = "Test8",
                             TeamId = 2
@@ -544,7 +675,7 @@ namespace PortalPerfomanceEmployees.Migrations
                             Id = 8,
                             EmployeeId = 9,
                             FirstName = "Emp9",
-                            FromDate = new DateTime(2022, 9, 13, 15, 50, 31, 653, DateTimeKind.Local).AddTicks(7377),
+                            FromDate = new DateTime(2022, 9, 16, 18, 46, 58, 316, DateTimeKind.Local).AddTicks(2314),
                             IsActive = true,
                             LastName = "Test9",
                             TeamId = 2
@@ -554,7 +685,7 @@ namespace PortalPerfomanceEmployees.Migrations
                             Id = 9,
                             EmployeeId = 10,
                             FirstName = "Emp10",
-                            FromDate = new DateTime(2022, 9, 13, 15, 50, 31, 653, DateTimeKind.Local).AddTicks(7379),
+                            FromDate = new DateTime(2022, 9, 16, 18, 46, 58, 316, DateTimeKind.Local).AddTicks(2316),
                             IsActive = true,
                             LastName = "Test10",
                             TeamId = 2
@@ -564,7 +695,7 @@ namespace PortalPerfomanceEmployees.Migrations
                             Id = 10,
                             EmployeeId = 11,
                             FirstName = "Emp11",
-                            FromDate = new DateTime(2022, 9, 13, 15, 50, 31, 653, DateTimeKind.Local).AddTicks(7381),
+                            FromDate = new DateTime(2022, 9, 16, 18, 46, 58, 316, DateTimeKind.Local).AddTicks(2318),
                             IsActive = true,
                             LastName = "Test11",
                             TeamId = 2
@@ -574,7 +705,7 @@ namespace PortalPerfomanceEmployees.Migrations
                             Id = 11,
                             EmployeeId = 4,
                             FirstName = "Emp4",
-                            FromDate = new DateTime(2022, 9, 13, 15, 50, 31, 653, DateTimeKind.Local).AddTicks(7383),
+                            FromDate = new DateTime(2022, 9, 16, 18, 46, 58, 316, DateTimeKind.Local).AddTicks(2320),
                             IsActive = true,
                             LastName = "Test4",
                             TeamId = 2
