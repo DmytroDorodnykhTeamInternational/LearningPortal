@@ -277,8 +277,7 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
           component="div"
         >
           Employees&nbsp;
-          {/* The request for create a new entity should be placed in the element to which the link points */}
-          <Link to={"#"}>Add</Link>
+          <Link to={"/createEmployee"}>Add</Link>
         </Typography>
       )}
       {numSelected > 0 ? (

@@ -53,13 +53,13 @@
         "overrides": [
             {
               "files": [
-                "./src/**/*.js", 
-                "./src/**/*.jsx", 
-                "./src/**/*.ts", 
-                "./src/**/*.tsx", 
-                "./src/**/*.css",
-                "./src/**/*.md",
-                "./src/**/*.json"
+                    "./src/**/*.js",
+                    "./src/**/*.jsx",
+                    "./src/**/*.ts",
+                    "./src/**/*.tsx",
+                    "./src/**/*.css",
+                    "./src/**/*.md",
+                    "./src/**/*.json"
             ]
             }
         ]

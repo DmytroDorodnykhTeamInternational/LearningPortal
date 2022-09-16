@@ -15,3 +15,21 @@ export async function GetEmployees() {
   }
   return [];
 }
+
+export async function PostEmployee(Employee) {
+  await API.post("/Employee", {
+    "username": Employee.username,
+    "emailAddress": Employee.emailAddress,
+    "password": Employee.password,
+    "firstName": Employee.firstName,
+    "lastName": Employee.lastName,
+    "dateOfBirth": Employee.dateOfBirth,
+    "seniority": parseInt(Employee.seniority),
+    "role": parseInt(Employee.role)
+  }, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${Cookies.get("user_session")}`,
+    },
+  }).then(({data}) => console.log(data));
+}
