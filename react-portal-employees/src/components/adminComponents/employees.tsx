@@ -472,8 +472,7 @@ export default function EmployeesTable() {
                       <TableCell>{row.seniority}</TableCell>
                       <TableCell>{row.role}</TableCell>
                       <TableCell>
-                        {/* The request for update a new entity should be placed in the element to which the link points */}
-                        <Link to={"#" + row.id}>Edit</Link>
+                        <Link to={"/updateEmployee/"+ row.id}>Edit</Link>
                       </TableCell>
                     </TableRow>
                   );
