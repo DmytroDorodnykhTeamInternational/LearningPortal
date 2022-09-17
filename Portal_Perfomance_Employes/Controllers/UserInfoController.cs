@@ -6,9 +6,6 @@ using PortalPerfomanceEmployees.Data;
 using PortalPerfomanceEmployees.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
-using System.Diagnostics.Metrics;
-using Microsoft.IdentityModel.Tokens;
-using System.ComponentModel.DataAnnotations;
 
 namespace PortalPerfomanceEmployees.Controllers
 {
@@ -28,67 +25,73 @@ namespace PortalPerfomanceEmployees.Controllers
         [HttpGet]
         public async Task<IActionResult> GetUserRole()
         {
-            int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int id);
-            var emp = await _context.Employees
-                .FirstOrDefaultAsync(e => e.Id == id);
-            if (emp == null)
+            if (int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int id))
             {
-                return StatusCode(403, "Error! Token is corrupt. ID of authorized user was not found");
+                var emp = await _context.Employees.FirstOrDefaultAsync(e => e.Id == id);
+                if (emp == null)
+                {
+                    return StatusCode(403, "Error! ID of authorized user was not found");
+                }
+                else if (emp?.Role == null)
+                {
+                    return StatusCode(403, "Error! Token is corrupt. Role of authorized user was not found");
+                }
+                else
+                {
+                    return Ok(User.FindFirst(ClaimTypes.Role)?.Value);
+                }
             }
-            else if (emp?.Role == null)
-            {
-                return StatusCode(403, "Error! Token is corrupt. Role of authorized user was not found");
-            }
-            else
-            {
-                return Ok(User.FindFirst(ClaimTypes.Role)?.Value);
-            }
+            return StatusCode(403, "Error! Token is corrupt. ID of authorized user was not found");
         }
 
         [Route("GetUserProfile")]
         [HttpGet]
         public async Task<IActionResult> GetUserProfile()
         {
-            int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int id);
-            var emp = await _context.Employees
-                .FirstOrDefaultAsync(e => e.Id == id);
-            return emp == null ? StatusCode(403, "Error! Token is corrupt. ID of authorized user was not found") : Ok(emp);
+            if (int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int id))
+            {
+                var emp = await _context.Employees.FirstOrDefaultAsync(e => e.Id == id);
+                return emp != null ? Ok(emp) : StatusCode(403, "Error! ID of authorized user was not found");
+            }
+            return StatusCode(403, "Error! Token is corrupt. ID of authorized user was not found");
         }
 
         [Route("GetEmployeeProfile")]
         [HttpGet]
         public async Task<IActionResult> GetEmployeeProfile(int targetId)
         {
-            int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int empId);
-            var emp = await _context.Employees
-                .FirstOrDefaultAsync(e => e.Id == empId);
-            if (emp != null)
+            if (int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int empId))
             {
-                var target = await _context.Employees.FirstOrDefaultAsync(t => t.Id == targetId);
-                if (target == null)
+                var emp = await _context.Employees.FirstOrDefaultAsync(e => e.Id == empId);
+                if (emp != null)
                 {
-                    return NotFound("Employee with specified ID was not found");
-                }
-                else if (emp.Role == Role.Admin)
-                {
-                    return Ok(target);
-                }
-                else
-                {
-                    var empTeam = await _context.TeamMembers.FirstOrDefaultAsync(e => e.EmployeeId == empId && e.IsActive);
-                    var targetTeam = await _context.TeamMembers.FirstOrDefaultAsync(t => t.EmployeeId == targetId && t.IsActive);
-                    if (empTeam?.TeamId == null || targetTeam?.TeamId == null)
+                    var target = await _context.Employees.FirstOrDefaultAsync(t => t.Id == targetId);
+                    if (target == null)
                     {
-                        return StatusCode(403, "You do not have permission to view this profile");
+                        return NotFound("Employee with specified ID was not found");
                     }
-                    else if (empTeam.TeamId == targetTeam.TeamId)
+                    else if (emp.Role == Role.Admin)
                     {
-                        // Clearing targetTeam to not get fill "teamMemberships" value in response
-                        targetTeam = null;
                         return Ok(target);
                     }
-                    return StatusCode(403, "You do not have permission to view this profile");
+                    else
+                    {
+                        var empTeam = await _context.TeamMembers.FirstOrDefaultAsync(e => e.EmployeeId == empId && e.IsActive);
+                        var targetTeam = await _context.TeamMembers.FirstOrDefaultAsync(t => t.EmployeeId == targetId && t.IsActive);
+                        if (empTeam?.TeamId == null || targetTeam?.TeamId == null)
+                        {
+                            return StatusCode(403, "You do not have permission to view this profile");
+                        }
+                        else if (empTeam.TeamId == targetTeam.TeamId)
+                        {
+                            // Clearing targetTeam to not get fill "teamMemberships" value in response
+                            targetTeam = null;
+                            return Ok(target);
+                        }
+                        return StatusCode(403, "You do not have permission to view this profile");
+                    }
                 }
+                return StatusCode(403, "Error! ID of authorized user was not found");
             }
             return StatusCode(403, "Error! Token is corrupt. ID of authorized user was not found");
         }
@@ -97,74 +100,86 @@ namespace PortalPerfomanceEmployees.Controllers
         [HttpGet]
         public async Task<IActionResult> GetUserColleagues()
         {
-            int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int id);
-            var emp = await _context.TeamMembers
-                .FirstOrDefaultAsync(e => e.EmployeeId == id && e.IsActive);
-            if (emp != null)
+            if (int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int id))
             {
-                var team = await _context.TeamMembers.Where(t => t.TeamId == emp.TeamId && t.IsActive).ToListAsync();
-
-                var colleagues = new List<Employee>();
-                foreach (var colleague in team)
+                var emp = await _context.TeamMembers.FirstOrDefaultAsync(e => e.EmployeeId == id && e.IsActive);
+                if (emp != null)
                 {
-                    var employee = await _context.Employees.Where(e => e.Id == colleague.EmployeeId).FirstOrDefaultAsync();
-                    colleagues.Add(
-                        new Employee
-                        {
-                            Id = employee.Id,
-                            Username = employee.Username,
-                            EmailAddress = employee.EmailAddress,
-                            FirstName = employee.FirstName,
-                            LastName = employee.LastName,
-                            DateOfBirth = employee.DateOfBirth,
-                            Seniority = employee.Seniority,
-                            Role = employee.Role,
-                        });
+                    var team = await _context.TeamMembers.Where(t => t.TeamId == emp.TeamId && t.IsActive).ToListAsync();
+
+                    var colleagues = new List<Employee>();
+                    foreach (var colleague in team)
+                    {
+                        var employee = await _context.Employees.Where(e => e.Id == colleague.EmployeeId).FirstOrDefaultAsync();
+                        colleagues.Add(
+                            new Employee
+                            {
+                                Id = employee.Id,
+                                Username = employee.Username,
+                                EmailAddress = employee.EmailAddress,
+                                FirstName = employee.FirstName,
+                                LastName = employee.LastName,
+                                DateOfBirth = employee.DateOfBirth,
+                                Seniority = employee.Seniority,
+                                Role = employee.Role,
+                            });
+                    }
+                    return colleagues == null ? NotFound("Something went wrong") : Ok(colleagues);
                 }
-                return colleagues == null ? NotFound("Something went wrong") : Ok(colleagues);
+                return NotFound("The team with that ID was not found");
             }
-            return NotFound("The team with that ID was not found");
+            return StatusCode(403, "Error! Token is corrupt. ID of authorized user was not found");
         }
 
         [Route("GetUserTeamName")]
         [HttpGet]
         public async Task<IActionResult> GetUserTeamName()
         {
-            int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int id);
-            var emp = await _context.TeamMembers
-                .FirstOrDefaultAsync(e => e.EmployeeId == id && e.IsActive);
-            if (emp != null)
+            if (int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int id))
             {
-                var team = await _context.Teams.FirstOrDefaultAsync(c => c.TeamId == emp.TeamId);
-                return team == null ? StatusCode(403, "Something went wrong") : Ok(team.TeamName);
+                var emp = await _context.TeamMembers.FirstOrDefaultAsync(e => e.EmployeeId == id && e.IsActive);
+                if (emp != null)
+                {
+                    var team = await _context.Teams.FirstOrDefaultAsync(c => c.TeamId == emp.TeamId);
+                    return team == null ? StatusCode(403, "Something went wrong") : Ok(team.TeamName);
+                }
+                return NotFound("Сurrent user is not assigned to any team");
             }
-            return NotFound("Сurrent user is not assigned to any team");
+            return StatusCode(403, "Error! Token is corrupt. ID of authorized user was not found");
         }
 
         [Route("GetUserTeamHistory")]
         [HttpGet]
         public async Task<IActionResult> GetUserTeamHistory()
         {
-            int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int id);
-            var emp = await _context.TeamMembers.Where(e => e.EmployeeId == id).ToListAsync();
-            return (emp == null) ? NotFound("Сurrent user has never been assigned to a team") : Ok(emp);
+            if (int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int id))
+            {
+                var emp = await _context.TeamMembers.Where(e => e.EmployeeId == id).ToListAsync();
+                return (emp == null) ? NotFound("Сurrent user has never been assigned to a team") : Ok(emp);
+            }
+            return StatusCode(403, "Error! Token is corrupt. ID of authorized user was not found");
         }
 
         [Route("UpdateUserProfile")]
         [HttpPost]
         public async Task<IActionResult> UpdateUserProfile(EmployeeUserUpdateDTO newEmp)
         {
-            int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int id);
-            var oldEmp = await _context.Employees
-                .FirstOrDefaultAsync(e => e.Id == id);
-            if (oldEmp == null) return StatusCode(403, "Error! Token is corrupt. ID of authorized user was not found");
-            oldEmp.Username = newEmp.Username;
-            oldEmp.Password = newEmp.Password;
-            oldEmp.EmailAddress = newEmp.EmailAddress;
-            oldEmp.FirstName = newEmp.FirstName;
-            oldEmp.LastName = newEmp.LastName;
-            await _context.SaveChangesAsync();
-            return Ok(oldEmp);
+            if (int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int id))
+            {
+                var oldEmp = await _context.Employees.FirstOrDefaultAsync(e => e.Id == id);
+                if (oldEmp == null)
+                {
+                    return StatusCode(403, "Error! ID of authorized user was not found");
+                }
+                oldEmp.Username = newEmp.Username;
+                oldEmp.Password = newEmp.Password;
+                oldEmp.EmailAddress = newEmp.EmailAddress;
+                oldEmp.FirstName = newEmp.FirstName;
+                oldEmp.LastName = newEmp.LastName;
+                await _context.SaveChangesAsync();
+                return Ok(oldEmp);
+            }
+            return StatusCode(403, "Error! Token is corrupt. ID of authorized user was not found");
         }
     }
 }
