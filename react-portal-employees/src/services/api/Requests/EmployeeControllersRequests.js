@@ -51,3 +51,11 @@ export async function EditEmployee(id, Employee, dateOfBirth) {
     },
   }).then(({data}) => console.log(data));
 }
+
+export async function DeleteEmployee(id) {
+  await API.delete(`/Employee/${id}`, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get("user_session")}`,
+    },
+  }).then(({data}) => console.log(data));
+}

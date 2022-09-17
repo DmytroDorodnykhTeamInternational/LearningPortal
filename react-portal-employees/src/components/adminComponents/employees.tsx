@@ -25,7 +25,7 @@ import Box from "@mui/material/Box";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { visuallyHidden } from "@mui/utils";
 
-import { GetEmployees } from "../../services/api/Requests/EmployeeControllersRequests";
+import { GetEmployees, DeleteEmployee } from "../../services/api/Requests/EmployeeControllersRequests";
 import { RefreshToken } from "../../services/api/Requests/LoginControllersRequests";
 import { useJwt } from "react-jwt";
 import Cookies from "js-cookie";
@@ -243,7 +243,9 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
     event: React.MouseEvent<unknown>,
     id: number[]
   ) => {
-    console.log(id);
+    id.forEach((value) => {
+      DeleteEmployee(value);
+    });
   };
 
   return (
@@ -345,6 +347,7 @@ export default function EmployeesTable() {
       }
       getEmployees();
     }
+
   });
 
   const handleRequestSort = (
@@ -355,7 +358,7 @@ export default function EmployeesTable() {
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
-
+  
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
       const newSelected = rows.map((n) => n.id);
