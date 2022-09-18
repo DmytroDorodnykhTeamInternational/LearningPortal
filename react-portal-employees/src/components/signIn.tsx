@@ -17,9 +17,8 @@ import Alert from "@mui/material/Alert";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 
-// import TokenValidate from "../services/tokenValidate";
-import { AuthRequest } from "../services/api/ApiRequests";
-import { GetRole } from "../services/api/ApiRequests";
+import { AuthRequest } from "../services/api/Requests/LoginControllersRequests";
+import { GetRole } from "../services/api/Requests/UserInfoControllerRequests";
 import { isValid, isInvalid } from "../redux/slice/authSlice";
 import { visitor, user, admin } from "../redux/slice/roleSlice";
 import { useAppDispatch } from "./../redux/hooks";
@@ -38,7 +37,6 @@ export default function SignIn() {
     const data = new FormData(event.currentTarget);
     var isSuccessfully = await AuthRequest(data);
     if (isSuccessfully === true) {
-      // TokenValidate();
       dispatch(isValid());
       let data = GetRole();
       if (data) {

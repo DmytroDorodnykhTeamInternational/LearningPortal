@@ -226,6 +226,10 @@ namespace PortalPerfomanceEmployees.Data
                 new TeamMember { Id = 10, EmployeeId = 11, TeamId = 2, FirstName = "Emp11", LastName = "Test11", FromDate = DateTime.Now, IsActive = true },
                 new TeamMember { Id = 11, EmployeeId = 4, TeamId = 2, FirstName = "Emp4", LastName = "Test4", FromDate = DateTime.Now, IsActive = true }
                 );
+            modelBuilder.Entity<EmployeeSkill>().HasData(
+                new EmployeeSkill { Id = 1, EmployeeId = 1, SkillId = 1, SkillLevelId = 1 },
+                new EmployeeSkill { Id = 2, EmployeeId = 1, SkillId = 2, SkillLevelId = 7 }
+                );
             modelBuilder.Entity<SkillLevelType>().HasData(
                 new SkillLevelType { SkillLevelTypeId = 1, SkillLevelTypeName = "Language" },
                 new SkillLevelType { SkillLevelTypeId = 2, SkillLevelTypeName = "Technology" }
