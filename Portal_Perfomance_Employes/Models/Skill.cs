@@ -14,7 +14,7 @@ namespace PortalPerfomanceEmployees.Models
         public int SkillTypeId { get; set; }
         public SkillType SkillType { get; set; }
         public string SkillName { get; set; }
-        public Certification Certification { get; set; }
+        public int CertificationSkillId { get; set; }
         public ICollection<EmployeeSkill> EmployeeSkills { get; set; } = new List<EmployeeSkill>();
     }
 }

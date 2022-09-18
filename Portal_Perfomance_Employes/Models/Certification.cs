@@ -8,8 +8,7 @@ namespace PortalPerfomanceEmployees.Models
         [Key]
         public int CertificationId { get; set; }
         [ForeignKey("SkillId")]
-        public int SkillId { get; set; }
-        public Skill Skill { get; set; }
+        public int CertificationSkillId { get; set; }
         public string CertificationName { get; set; }
         public ICollection<EmployeeCertification> EmployeeCertifications { get; set; } = new List<EmployeeCertification>();
     }

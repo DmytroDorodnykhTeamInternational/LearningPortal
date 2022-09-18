@@ -31,10 +31,6 @@ namespace PortalPerfomanceEmployees.Data
                 .HasOne(f => f.Certification)
                 .WithMany(s => s.EmployeeCertifications)
                 .OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<Certification>()
-                .HasOne(f => f.Skill)
-                .WithOne(s => s.Certification)
-                .OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<EmployeeSkill>()
                 .HasOne(f => f.Employee)
                 .WithMany(s => s.EmployeeSkills)
@@ -260,6 +256,16 @@ namespace PortalPerfomanceEmployees.Data
                 new Skill { SkillId = 2, SkillLevelTypeId = 2, SkillName = "Microsoft Azure architecture", SkillTypeId = 1 },
                 new Skill { SkillId = 3, SkillLevelTypeId = 2, SkillName = "C#/.NET programming", SkillTypeId = 1 }
                 );
+            modelBuilder.Entity<CertificationSkill>().HasData(
+                new CertificationSkill { CertificationSkillId = 1, CertificationId = 1, SkillId = 2 },
+                new CertificationSkill { CertificationSkillId = 2, CertificationId = 2, SkillId = 3 },
+                new CertificationSkill { CertificationSkillId = 3, CertificationId = 3, SkillId = 1 }
+                );
+            modelBuilder.Entity<Certification>().HasData(
+                new Certification { CertificationId = 1, CertificationName = "AZ-301 Microsoft Azure Architect Design", CertificationSkillId = 1 },
+                new Certification { CertificationId = 2, CertificationName = "70-483: Programming in C#", CertificationSkillId = 2 },
+                new Certification { CertificationId = 3, CertificationName = "Cambridge English: Advanced", CertificationSkillId = 3 }
+                );
         }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Team> Teams { get; set; }
@@ -271,5 +277,6 @@ namespace PortalPerfomanceEmployees.Data
         public DbSet<SkillLevel> SkillLevels { get; set; }
         public DbSet<SkillLevelType> SkillLevelTypes { get; set; }
         public DbSet<SkillType> SkillTypes { get; set; }
+        public DbSet<CertificationSkill> CertificationSkills { get; set; }
     }
 }
