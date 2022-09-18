@@ -252,9 +252,9 @@ namespace PortalPerfomanceEmployees.Data
                 new SkillLevel { SkillLevelId = 11, SkillLevelTypeId = 2, SkillLevelName = "Expert" }
                 );
             modelBuilder.Entity<Skill>().HasData(
-                new Skill { SkillId = 1, SkillLevelTypeId = 2, SkillName = "English proficiency", SkillTypeId = 2 },
-                new Skill { SkillId = 2, SkillLevelTypeId = 1, SkillName = "Microsoft Azure architecture", SkillTypeId = 1 },
-                new Skill { SkillId = 3, SkillLevelTypeId = 1, SkillName = "C#/.NET programming", SkillTypeId = 1 }
+                new Skill { SkillId = 1, SkillLevelTypeId = 1, SkillName = "English proficiency", SkillTypeId = 2 },
+                new Skill { SkillId = 2, SkillLevelTypeId = 2, SkillName = "Microsoft Azure architecture", SkillTypeId = 1 },
+                new Skill { SkillId = 3, SkillLevelTypeId = 2, SkillName = "C#/.NET programming", SkillTypeId = 1 }
                 );
             modelBuilder.Entity<CertificationSkill>().HasData(
                 new CertificationSkill { CertificationSkillId = 1, CertificationId = 1, SkillId = 2 },
