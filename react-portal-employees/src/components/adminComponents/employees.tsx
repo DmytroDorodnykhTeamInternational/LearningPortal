@@ -231,22 +231,12 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 
 interface EnhancedTableToolbarProps {
   numSelected: number;
-  selectedId: number[];
+  handleDeleteClick: (
+  ) => void;
 }
 
 const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
-  const { numSelected } = props;
-  const { selectedId } = props;
-
-  // The request for deletion should be placed here
-  const handleDeleteClick = (
-    event: React.MouseEvent<unknown>,
-    id: number[]
-  ) => {
-    id.forEach((value) => {
-      DeleteEmployee(value);
-    });
-  };
+  const { numSelected,  handleDeleteClick } = props;
 
   return (
     <Toolbar
@@ -286,7 +276,7 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
         <Tooltip title="Delete">
           <IconButton>
             <DeleteIcon
-              onClick={(event) => handleDeleteClick(event, selectedId)}
+              onClick={() => handleDeleteClick()}
             />
           </IconButton>
         </Tooltip>
@@ -409,13 +399,20 @@ export default function EmployeesTable() {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
+  const handleDeleteClick = () => {
+    selected.forEach((value) => {
+      DeleteEmployee(value);
+    });
+    setSelected([]);
+  };
+
   return (
     <Box sx={{ width: "100%", px: "20px", pt: "20px" }}>
       <CssBaseline />
       <Paper sx={{ width: "100%", mb: 2 }}>
         <EnhancedTableToolbar
           numSelected={selected.length}
-          selectedId={selected}
+          handleDeleteClick={handleDeleteClick}
         />
         <TableContainer>
           <Table
