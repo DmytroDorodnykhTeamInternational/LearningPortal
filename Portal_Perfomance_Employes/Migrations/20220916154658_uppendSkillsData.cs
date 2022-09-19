@@ -26,57 +26,11 @@ namespace PortalPerfomanceEmployees.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "SkillLevelTypes",
-                columns: new[] { "SkillLevelTypeId", "SkillLevelTypeName" },
-                values: new object[,]
-                {
-                    { 1, "Language" },
-                    { 2, "Technology" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "SkillTypes",
-                columns: new[] { "SkillTypeId", "SkillTypeName" },
-                values: new object[,]
-                {
-                    { 1, "Hard Skill" },
-                    { 2, "Soft Skill" }
-                });
-
-            migrationBuilder.InsertData(
                 table: "Teams",
                 columns: new[] { "TeamId", "DateCreated", "TeamLeaderId", "TeamName" },
                 values: new object[,]
                 {
                     { 2, new DateTime(2022, 9, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 11, "Team number two" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "SkillLevels",
-                columns: new[] { "SkillLevelId", "SkillLevelName", "SkillLevelTypeId" },
-                values: new object[,]
-                {
-                    { 1, "A1", 1 },
-                    { 2, "A2", 1 },
-                    { 3, "B1", 1 },
-                    { 4, "B2", 1 },
-                    { 5, "C1", 1 },
-                    { 6, "C2", 1 },
-                    { 7, "Novice", 2 },
-                    { 8, "Beginner", 2 },
-                    { 9, "Competent", 2 },
-                    { 10, "Proficient", 2 },
-                    { 11, "Expert", 2 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Skills",
-                columns: new[] { "SkillId", "SkillLevelTypeId", "SkillName", "SkillTypeId" },
-                values: new object[,]
-                {
-                    { 1, 1, "English proficiency", 2 },
-                    { 2, 2, "Microsoft Azure architecture", 1 },
-                    { 3, 2, "C#/.NET programming", 1 }
                 });
 
             migrationBuilder.InsertData(
