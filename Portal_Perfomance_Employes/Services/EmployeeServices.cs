@@ -40,7 +40,7 @@ namespace PortalPerfomanceEmployees.Services
         {
             try
             {
-                var EmployeeToDelete = await _employeeRepository.GetById(id);
+                var EmployeeToDelete = _employeeRepository.GetById(id);
                 if (EmployeeToDelete == null) return false;
                 await _employeeRepository.Delete(EmployeeToDelete);
                 _employeeRepository.DeleteEmployeeTeamMenbers(EmployeeToDelete.Id);
@@ -55,7 +55,7 @@ namespace PortalPerfomanceEmployees.Services
         {
             try
             {
-                var EmployeeToUpdate = await _employeeRepository.GetById(id);
+                var EmployeeToUpdate = _employeeRepository.GetById(id);
                 if (EmployeeToUpdate == null) return false;
                 EmployeeToUpdate = _mapper.Map<Employee>(employee);
                 await _employeeRepository.Update(EmployeeToUpdate);

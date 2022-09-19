@@ -19,9 +19,13 @@ namespace PortalPerfomanceEmployees.Repository
         {
             return await _context.Employees.ToListAsync();
         }
-        public async Task<Employee> GetById(int id)
+        public Employee GetById(int id)
         {
-            return await _context.Employees.FirstOrDefaultAsync(e => e.Id == id);
+            return _context.Employees.FirstOrDefault(e => e.Id == id);
+        }
+        public Employee VerifyEmployeeLogin(string userName, string password)
+        {
+            return _context.Employees.FirstOrDefault(e => e.Username == userName && e.Password == password);
         }
         public async Task Create(Employee employee)
         {

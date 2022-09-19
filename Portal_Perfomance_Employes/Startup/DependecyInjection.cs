@@ -78,6 +78,7 @@ namespace PortalPerfomanceEmployees.Startup
             });
             services.AddScoped<SeedingService>();
             services.AddScoped<IEmployeeServices, EmployeeServices>();
+            services.AddScoped<LoginServices>();
             services.AddScoped<EmployeeRepository>();
             return services;
         }

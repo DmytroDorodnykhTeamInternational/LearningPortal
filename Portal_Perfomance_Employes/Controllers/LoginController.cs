@@ -12,6 +12,7 @@ using Newtonsoft.Json.Linq;
 using NuGet.Common;
 using PortalPerfomanceEmployees.Data;
 using PortalPerfomanceEmployees.Models;
+using PortalPerfomanceEmployees.Services;
 
 namespace PortalPerfomanceEmployees.Controllers
 {
@@ -19,95 +20,51 @@ namespace PortalPerfomanceEmployees.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-        private readonly AppDbContext _context;
-        private readonly IConfiguration _config;
-        private readonly int tokenLifeSpan = 10;
+        private readonly LoginServices _logiinServices;
 
-        public LoginController(AppDbContext context, IConfiguration config)
+        public LoginController(LoginServices loginServices)
         {
-            _context = context;
-            _config = config;
+            _logiinServices = loginServices;
         }
 
         [AllowAnonymous]
         [HttpPost]
         public IActionResult Login(EmployeeLoginDTO empLogin)
         {
-            var Employee = Autenticate(empLogin);
-            if (Employee != null)
+            if (empLogin == null) return BadRequest();
+            if (string.IsNullOrWhiteSpace(empLogin.Username)) return BadRequest();
+            if (string.IsNullOrWhiteSpace(empLogin.Password)) return BadRequest();
+            try
             {
-                string token = GenerateToken(Employee);
-                return Ok(token);
+                string token = _logiinServices.Login(empLogin);
+                if (!string.IsNullOrEmpty(token))
+                    return Ok(token);
+                return
+                    NotFound();
             }
-            return NotFound("Username or password not found.");
+            catch (Exception e)
+            {
+                return Problem(e.Message);
+            }
         }
 
         [Route("RefreshToken")]
         [HttpPost]
         public IActionResult RefreshToken(string oldToken)
         {
-            var handler = new JwtSecurityTokenHandler();
-            if (handler.CanReadToken(oldToken))
+            if (string.IsNullOrWhiteSpace(oldToken)) return BadRequest();
+            try
             {
-                var jwtSecurityToken = handler.ReadJwtToken(oldToken);
-                var userId = jwtSecurityToken.Claims.First(claim => claim.Type.Equals(ClaimTypes.NameIdentifier)).Value;
-
-
-                if (int.TryParse(userId, out int empId))
-                {
-                    var emp = _context.Employees.FirstOrDefault(e => e.Id == empId);
-                    if (emp != null)
-                    {
-                        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
-                        var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-                        var claims = new[]
-                        {
-                        new Claim(ClaimTypes.NameIdentifier, emp.Id.ToString()),
-                        new Claim(ClaimTypes.Email, emp.EmailAddress),
-                        new Claim(ClaimTypes.GivenName, emp.FirstName),
-                        new Claim(ClaimTypes.Role, emp.Role.ToString())
-                    };
-                        var token = new JwtSecurityToken(_config["Jwt:Issuer"],
-                          _config["Jwt:Audience"],
-                          claims,
-                          expires: DateTime.Now.AddMinutes(tokenLifeSpan),
-                          signingCredentials: credentials);
-                        return Ok(new JwtSecurityTokenHandler().WriteToken(token));
-                    }
-                }
-                return StatusCode(403, "Username not found.");
+                string token = _logiinServices.RefreshToken(oldToken);
+                if (!string.IsNullOrEmpty(token))
+                    return Ok(token);
+                return
+                    NotFound();
             }
-            return StatusCode(403, "Token is invalid.");
-        }
-
-        private string GenerateToken(Employee emp)
-        {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
-            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-            var claims = new[]
+            catch (Exception e)
             {
-                new Claim(ClaimTypes.NameIdentifier, emp.Id.ToString()),
-                new Claim(ClaimTypes.Email, emp.EmailAddress),
-                new Claim(ClaimTypes.GivenName, emp.FirstName),
-                new Claim(ClaimTypes.Role, emp.Role.ToString())
-            };
-            var token = new JwtSecurityToken(_config["Jwt:Issuer"],
-              _config["Jwt:Audience"],
-              claims,
-              expires: DateTime.Now.AddMinutes(tokenLifeSpan),
-              signingCredentials: credentials);
-            return new JwtSecurityTokenHandler().WriteToken(token);
-        }
-
-        private Employee? Autenticate(EmployeeLoginDTO emp)
-        {
-            var currentEmp = _context.Employees.FirstOrDefault(u => u.Username == emp.Username && u.Password == emp.Password);
-            if (currentEmp != null)
-            {
-                return currentEmp;
+                return Problem(e.Message);
             }
-            return null;
         }
-
     }
 }
