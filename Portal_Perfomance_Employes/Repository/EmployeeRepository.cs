@@ -8,12 +8,10 @@ namespace PortalPerfomanceEmployees.Repository
     public class EmployeeRepository
     {
         private readonly AppDbContext _context;
-        private readonly IMapper _mapper;
 
-        public EmployeeRepository(AppDbContext context, IMapper mapper)
+        public EmployeeRepository(AppDbContext context)
         {
             _context = context;
-            _mapper = mapper;
         }
         public async Task<List<Employee>> GetAll()
         {

@@ -1,18 +1,9 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Security.Principal;
-using System.Text;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json.Linq;
-using NuGet.Common;
-using PortalPerfomanceEmployees.Data;
+﻿using PortalPerfomanceEmployees.Repository;
 using PortalPerfomanceEmployees.Models;
-using PortalPerfomanceEmployees.Repository;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using System.Text;
 
 namespace PortalPerfomanceEmployees.Services
 {

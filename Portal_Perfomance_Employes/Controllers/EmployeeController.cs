@@ -7,7 +7,7 @@ namespace PortalPerfomanceEmployees.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class EmployeeController : ControllerBase
     {
         private readonly IEmployeeServices _employeeServices;
@@ -17,7 +17,7 @@ namespace PortalPerfomanceEmployees.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetEmployees()
         {
             try
