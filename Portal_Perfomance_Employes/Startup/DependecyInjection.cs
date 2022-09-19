@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using PortalPerfomanceEmployees.Config.Swagger;
 using PortalPerfomanceEmployees.Config.Mapper;
+using PortalPerfomanceEmployees.Repository;
+using PortalPerfomanceEmployees.Services;
 using Microsoft.IdentityModel.Tokens;
 using PortalPerfomanceEmployees.Data;
 using Microsoft.EntityFrameworkCore;
@@ -47,7 +49,6 @@ namespace PortalPerfomanceEmployees.Startup
             services.AddSingleton(new MapperConfiguration(cfg => { cfg.AddProfile(new ConfigMapper()); }).CreateMapper());
             services.AddMvc();
             services.AddEndpointsApiExplorer();
-            services.AddScoped<SeedingService>();
             services.AddSwaggerGen(setup =>
             {
                 var jwtSecurityScheme = new OpenApiSecurityScheme
@@ -75,6 +76,9 @@ namespace PortalPerfomanceEmployees.Startup
                         sqlOptions.EnableRetryOnFailure();
                     });
             });
+            services.AddScoped<SeedingService>();
+            services.AddScoped<IEmployeeServices, EmployeeServices>();
+            services.AddScoped<EmployeeRepository>();
             return services;
         }
 
