@@ -10,6 +10,8 @@ import SignUp from "./signUp";
 import SignIn from "./signIn";
 import EmployeesTable from "./adminComponents/employees";
 import ColleaguesTable from "./userComponents/colleagues";
+import CreateEmployee from "./Employee/createEmployee";
+import UpdateEmployee from "./Employee/updateEmployee";
 
 import IconButton from "@mui/material/IconButton";
 import Container from "@mui/material/Container";
@@ -133,6 +135,10 @@ const NavBar = () => {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/employees" element={<EmployeesTable />} />
         <Route path="/colleagues" element={<ColleaguesTable />} />
+        <Route path="/createEmployee" element={<CreateEmployee />}/>
+        <Route path="/updateEmployee" element={<UpdateEmployee />}>
+          <Route path=":id"  element={<UpdateEmployee />} />
+        </Route>
       </Routes>
     </div>
   );

@@ -7,11 +7,13 @@
         "@emotion/styled": "^11.10.0",
         "@mui/icons-material": "^5.10.2",
         "@mui/material": "^5.10.2",
+        "@mui/x-date-pickers": "^5.0.2",
         "@reduxjs/toolkit": "^1.8.5",
         "@testing-library/jest-dom": "^5.16.5",
         "@testing-library/react": "^13.3.0",
         "@testing-library/user-event": "^13.5.0",
         "axios": "^0.27.2",
+        "dayjs": "^1.11.5",
         "js-cookie": "^3.0.1",
         "react": "^18.2.0",
         "react-burger-menu": "^3.0.8",
@@ -42,25 +44,40 @@
             "react-app/jest"
         ],
         "rules": {
-            "indent": ["error", 2],
-            "linebreak-style": ["error", "unix"],
-            "quotes": ["error", "double"],
-            "semi": ["error", "always"],
+            "indent": [
+                "error",
+                2
+            ],
+            "linebreak-style": [
+                "error",
+                "unix"
+            ],
+            "quotes": [
+                "error",
+                "double"
+            ],
+            "semi": [
+                "error",
+                "always"
+            ],
             "no-empty": "warn",
-            "no-cond-assign": ["error", "always"],
+            "no-cond-assign": [
+                "error",
+                "always"
+            ],
             "for-direction": "off"
         },
         "overrides": [
             {
-              "files": [
-                "./src/**/*.js", 
-                "./src/**/*.jsx", 
-                "./src/**/*.ts", 
-                "./src/**/*.tsx", 
-                "./src/**/*.css",
-                "./src/**/*.md",
-                "./src/**/*.json"
-            ]
+                "files": [
+                    "./src/**/*.js",
+                    "./src/**/*.jsx",
+                    "./src/**/*.ts",
+                    "./src/**/*.tsx",
+                    "./src/**/*.css",
+                    "./src/**/*.md",
+                    "./src/**/*.json"
+                ]
             }
         ]
     },

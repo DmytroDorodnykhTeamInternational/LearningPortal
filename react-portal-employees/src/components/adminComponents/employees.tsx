@@ -25,7 +25,7 @@ import Box from "@mui/material/Box";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { visuallyHidden } from "@mui/utils";
 
-import { GetEmployees } from "../../services/api/Requests/EmployeeControllersRequests";
+import { GetEmployees, DeleteEmployee } from "../../services/api/Requests/EmployeeControllersRequests";
 import { RefreshToken } from "../../services/api/Requests/LoginControllersRequests";
 import { useJwt } from "react-jwt";
 import Cookies from "js-cookie";
@@ -231,20 +231,12 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 
 interface EnhancedTableToolbarProps {
   numSelected: number;
-  selectedId: number[];
+  handleDeleteClick: (
+  ) => void;
 }
 
 const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
-  const { numSelected } = props;
-  const { selectedId } = props;
-
-  // The request for deletion should be placed here
-  const handleDeleteClick = (
-    event: React.MouseEvent<unknown>,
-    id: number[]
-  ) => {
-    console.log(id);
-  };
+  const { numSelected,  handleDeleteClick } = props;
 
   return (
     <Toolbar
@@ -277,15 +269,14 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
           component="div"
         >
           Employees&nbsp;
-          {/* The request for create a new entity should be placed in the element to which the link points */}
-          <Link to={"#"}>Add</Link>
+          <Link to={"/createEmployee"}>Add</Link>
         </Typography>
       )}
       {numSelected > 0 ? (
         <Tooltip title="Delete">
           <IconButton>
             <DeleteIcon
-              onClick={(event) => handleDeleteClick(event, selectedId)}
+              onClick={() => handleDeleteClick()}
             />
           </IconButton>
         </Tooltip>
@@ -346,6 +337,7 @@ export default function EmployeesTable() {
       }
       getEmployees();
     }
+
   });
 
   const handleRequestSort = (
@@ -356,7 +348,7 @@ export default function EmployeesTable() {
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
-
+  
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
       const newSelected = rows.map((n) => n.id);
@@ -407,13 +399,20 @@ export default function EmployeesTable() {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
+  const handleDeleteClick = () => {
+    selected.forEach((value) => {
+      DeleteEmployee(value);
+    });
+    setSelected([]);
+  };
+
   return (
     <Box sx={{ width: "100%", px: "20px", pt: "20px" }}>
       <CssBaseline />
       <Paper sx={{ width: "100%", mb: 2 }}>
         <EnhancedTableToolbar
           numSelected={selected.length}
-          selectedId={selected}
+          handleDeleteClick={handleDeleteClick}
         />
         <TableContainer>
           <Table
@@ -473,8 +472,7 @@ export default function EmployeesTable() {
                       <TableCell>{row.seniority}</TableCell>
                       <TableCell>{row.role}</TableCell>
                       <TableCell>
-                        {/* The request for update a new entity should be placed in the element to which the link points */}
-                        <Link to={"#" + row.id}>Edit</Link>
+                        <Link to={"/updateEmployee/"+ row.id}>Edit</Link>
                       </TableCell>
                     </TableRow>
                   );

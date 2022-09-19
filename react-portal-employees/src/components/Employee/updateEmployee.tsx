@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Typography from "@mui/material/Typography";
@@ -9,34 +10,48 @@ import Container from "@mui/material/Container";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import dayjs, { Dayjs } from "dayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 
-import { PostEmployee } from "../../services/api/Requests/EmployeeControllersRequests";
+import { EditEmployee } from "../../services/api/Requests/EmployeeControllersRequests";
+import { GetEmployeeProfile } from "../../services/api/Requests/UserInfoControllerRequests";
+import { RefreshToken } from "../../services/api/Requests/LoginControllersRequests";
+import { useJwt } from "react-jwt";
+import Cookies from "js-cookie";
 
 const theme = createTheme();
-export default function CreateEmployee() {
+
+export default function UpdateEmployee() {
+  console.log(window.location.href.split("/").pop());
   const [input, setInput] = useState({
     username: "",
     emailAddress: "",
     password: "",
     firstName: "",
     lastName: "",
-    dateOfBirth: "",
     seniority: -1,
     role: -1
   });
+
+  const [date, setDate] = React.useState<Dayjs | null>(
+    dayjs(),
+  );
+
   const [ConfirmPwd, setConfirmPwd] = useState("");
   const [error, setError] = useState({
     username: "",
     password: "",
     confirmPassword: "",
     email: "",
-    FirstName: "",
-    LastName: "",
-    DateOfBirth: ""
+    firstName: "",
+    lastName: "",
+    dateOfBirth: ""
   });
   const enumSeniority = {
     junior: 0,
-    midLevel: 1,
+    midLivel: 1,
     senior: 2
   } as const;
   const enumRole = {
@@ -46,7 +61,7 @@ export default function CreateEmployee() {
   } as const;
 
   let navigate = useNavigate();
-
+  
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     let MsgEr = "";
@@ -58,8 +73,8 @@ export default function CreateEmployee() {
     if (MsgEr !== ""){
       alert(MsgEr);
       return;
-    } 
-    PostEmployee(input);
+    }
+    EditEmployee(window.location.href.split("/").pop(), input, date);
     navigate("/employees", { replace: true });
   };
 
@@ -110,24 +125,24 @@ export default function CreateEmployee() {
       case "email":
         if (!value) {
           stateObj[name] = "Please enter email.";
-        }else if((/^[\w-.]+@([\w-]+\.)+[\w-]{1,1}$/).test(value)){
+        }else if((/^[\w-\.]+@([\w-]+\.)+[\w-]{1,1}$/).test(value)){
           stateObj[name] = "Please enter valid email.";
         }
         break;
 
-      case "FirstName":
+      case "firstName":
         if (!value) {
           stateObj[name] = "Please enter first name.";
         }
         break;
 
-      case "LastName":
+      case "lastName":
         if (!value) {
           stateObj[name] = "Please enter last name.";
         }
         break;
 
-      case "DateOfBirth":
+      case "dateOfBirth":
         if (!value) {
           stateObj[name] = "Please enter date.";
         }else if((/\d{2}\/\d{2}\/\d{4}/).test(value)){
@@ -143,6 +158,52 @@ export default function CreateEmployee() {
     });
   };
 
+  const handleChange = (newValue: Dayjs | null) => {
+    if (newValue != null) {
+      var timeOffsetInMS:number = newValue.toDate().getTimezoneOffset() * 60000;
+      setDate(dayjs(new Date().setTime(newValue.toDate().getTime() - timeOffsetInMS)));
+    }
+    else {
+      setDate(dayjs(new Date().setTime(0)));
+    }
+  };
+
+  const { decodedToken, isExpired, reEvaluateToken } = useJwt(
+    Cookies.get("user_session")
+  );
+
+  useEffect(() => {
+    const refreshToken = async () => {
+      let isSuccessfully = await RefreshToken();
+      if (isSuccessfully) {
+        reEvaluateToken(Cookies.get("user_session"));
+      }
+    };
+
+    const getEmployee = async () => {
+      let employee = await GetEmployeeProfile(window.location.href.split("/").pop());
+      if (employee) {
+        setInput({
+          username: employee.username,
+          emailAddress:employee.emailAddress,
+          password: "",
+          firstName: employee.firstName,
+          lastName: employee.lastName,
+          seniority: employee.seniority,
+          role: employee.role
+        }); 
+        setDate(employee.dateOfBirth);
+      }
+    };
+
+    if (decodedToken) {
+      if (isExpired) {
+        refreshToken();
+      }
+      getEmployee();
+    }
+  }, [decodedToken, isExpired]);
+
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -155,7 +216,7 @@ export default function CreateEmployee() {
             alignItems: "center"
           }}>
           <Typography component="h1" variant="h5">
-              Create New Employee
+              Update Employee
           </Typography>
           <form onSubmit={handleSubmit}>
             <TextField
@@ -167,45 +228,49 @@ export default function CreateEmployee() {
               label="First Name"
               name="firstName"
               autoComplete="firstName"
+              value={input.firstName}
               onChange={e => checkValidation(e)}
-              error={!!error?.FirstName}
-              helperText={error.FirstName}
+              error={!!error?.firstName}
+              helperText={error.firstName}
             />
             <TextField
               margin="normal"
-              autoFocus
               required
               fullWidth
               id="lastName"
               label="Last Name"
               name="lastName"
               autoComplete="lastName"
+              value={input.lastName}
               onChange={e => checkValidation(e)}
-              error={!!error?.LastName}
-              helperText={error.LastName}
+              error={!!error?.lastName}
+              helperText={error.lastName}
             />
-            <TextField
-              margin="normal"
-              autoFocus
-              required
-              fullWidth
-              id="dateOfBirth"
-              name="dateOfBirth"
-              autoComplete="dateOfBirth"
-              type="date"
-              onChange={e => checkValidation(e)}
-              error={!!error?.DateOfBirth}
-              helperText={error.DateOfBirth}
-            />
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DesktopDatePicker
+                label="Date of Birth"
+                inputFormat="MM/DD/YYYY"
+                value={date}
+                onChange={handleChange}
+                renderInput={(params) => 
+                  <TextField {...params} 
+                    margin="normal"
+                    fullWidth
+                    id="dateOfBirth"
+                    name="dateOfBirth"
+                    autoComplete="dateOfBirth" 
+                  />}
+              />
+            </LocalizationProvider>
             <InputLabel htmlFor="seniority">Seniority</InputLabel>
-            <NativeSelect id="seniority" name="seniority" fullWidth required autoFocus onChange={e => checkValidation(e)}>
+            <NativeSelect id="seniority" name="seniority" fullWidth required onChange={e => checkValidation(e)} value={input.seniority}>
               <option value=""></option>
               <option value={enumSeniority.junior}>Junior</option>
-              <option value={enumSeniority.midLevel}>Mid Level</option>
+              <option value={enumSeniority.midLivel}>Mid Level</option>
               <option value={enumSeniority.senior}>Senior</option>
             </NativeSelect>
             <InputLabel htmlFor="role">Role</InputLabel>
-            <NativeSelect id="role" name="role" fullWidth required autoFocus onChange={e => checkValidation(e)}>
+            <NativeSelect id="role" name="role" fullWidth required onChange={e => checkValidation(e)} value={input.role}>
               <option value=""></option>
               <option value={enumRole.employee}>Employee</option>
               <option value={enumRole.teamLead}>Team lead</option>
@@ -213,7 +278,6 @@ export default function CreateEmployee() {
             </NativeSelect>
             <TextField
               margin="normal"
-              autoFocus
               required
               fullWidth
               id="email"
@@ -221,18 +285,19 @@ export default function CreateEmployee() {
               name="emailAddress"
               autoComplete="email"
               type="text"
+              value={input.emailAddress}
               onChange={e => checkValidation(e)}
               error={!!error?.email}
               helperText={error.email}
             />
             <TextField
               margin="normal"
-              autoFocus
               fullWidth
               id="userName"
               label="User Name"
               name="username"
               autoComplete="userName"
+              value={input.username}
               onChange={e => checkValidation(e)}
               error={!!error?.username}
               helperText={error.username}
@@ -263,7 +328,7 @@ export default function CreateEmployee() {
               helperText={error.confirmPassword}
             />
             <Button type="submit" fullWidth color="primary" variant="contained" sx={{ mt: 3, mb: 2 }}>
-                Save
+              Save
             </Button>
           </form>
         </Box>
@@ -271,4 +336,3 @@ export default function CreateEmployee() {
     </ThemeProvider>
   );
 }
-  

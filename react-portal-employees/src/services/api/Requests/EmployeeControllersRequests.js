@@ -15,3 +15,47 @@ export async function GetEmployees() {
   }
   return [];
 }
+
+export async function PostEmployee(Employee) {
+  await API.post("/Employee", {
+    "username": Employee.username,
+    "emailAddress": Employee.emailAddress,
+    "password": Employee.password,
+    "firstName": Employee.firstName,
+    "lastName": Employee.lastName,
+    "dateOfBirth": Employee.dateOfBirth,
+    "seniority": parseInt(Employee.seniority),
+    "role": parseInt(Employee.role)
+  }, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${Cookies.get("user_session")}`,
+    },
+  }).then(({data}) => console.log(data));
+}
+
+export async function EditEmployee(id, Employee, dateOfBirth) {
+  await API.post(`/Employee/${id}`, {
+    "username": Employee.username,
+    "emailAddress": Employee.emailAddress,
+    "password": Employee.password,
+    "firstName": Employee.firstName,
+    "lastName": Employee.lastName,
+    "dateOfBirth": dateOfBirth,
+    "seniority": parseInt(Employee.seniority),
+    "role": parseInt(Employee.role)
+  }, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${Cookies.get("user_session")}`,
+    },
+  }).then(({data}) => console.log(data));
+}
+
+export async function DeleteEmployee(id) {
+  await API.delete(`/Employee/${id}`, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get("user_session")}`,
+    },
+  }).then(({data}) => console.log(data));
+}
