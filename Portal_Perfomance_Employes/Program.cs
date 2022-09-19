@@ -9,6 +9,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseCors(DevelopmentSpecificOrigins);
+    app.SeedData();
 }
 else if (app.Environment.IsProduction())
 {

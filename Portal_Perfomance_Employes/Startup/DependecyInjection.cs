@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using PortalPerfomanceEmployees.Config.Swagger;
+using PortalPerfomanceEmployees.Config.Mapper;
 using Microsoft.IdentityModel.Tokens;
 using PortalPerfomanceEmployees.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using AutoMapper;
 
 namespace PortalPerfomanceEmployees.Startup
 {
@@ -42,8 +44,10 @@ namespace PortalPerfomanceEmployees.Startup
                     }
             );
             services.AddControllers().AddNewtonsoftJson(jsonOptions => jsonOptions.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            services.AddSingleton(new MapperConfiguration(cfg => { cfg.AddProfile(new ConfigMapper()); }).CreateMapper());
             services.AddMvc();
             services.AddEndpointsApiExplorer();
+            services.AddScoped<SeedingService>();
             services.AddSwaggerGen(setup =>
             {
                 var jwtSecurityScheme = new OpenApiSecurityScheme
@@ -72,6 +76,15 @@ namespace PortalPerfomanceEmployees.Startup
                     });
             });
             return services;
+        }
+
+        public static void SeedData(this IHost app)
+        {
+            using(var scope = app.Services.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var service = scope.ServiceProvider.GetService<SeedingService>();
+                service.Seed();
+            }
         }
     }
 }
